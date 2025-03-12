@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Data Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            text-align: center;
+            margin: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #8a8f70;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Excel Data Table</h2>
+    <table id="excelTable"></table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        const excelUrl = "https://docs.google.com/spreadsheets/d/1b0CeVbxVYfzlklJgAwCG08o_2NhxSe93Bhr1VimvwJs/export?format=xlsx";
+
+        async function fetchExcelData() {
+            try {
+                const response = await fetch(excelUrl);
+                const data = await response.arrayBuffer();
+                const workbook = XLSX.read(new Uint8Array(data), { type: 'array' });
+
+                const sheetName = workbook.SheetNames[0]; 
+                const sheet = workbook.Sheets[sheetName];
+                const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+                window.excelData = jsonData; // Store globally for cart.js
+
+                renderTable(jsonData);
+            } catch (error) {
+                console.error("Error loading Excel file:", error);
+            }
+        }
+
+        function renderTable(data) {
+            const table = document.getElementById('excelTable');
+            let html = "<tr>";
+
+            // Add headers
+            data[0].forEach(header => {
+                html += `<th>${header}</th>`;
+            });
+            html += "</tr>";
+
+            // Add rows
+            for (let i = 1; i < data.length; i++) {
+                html += "<tr>";
+                data[i].forEach(cell => {
+                    html += `<td>${cell}</td>`;
+                });
+                html += "</tr>";
+            }
+
+            table.innerHTML = html;
+        }
+
+        fetchExcelData();
+    </script>
+</body>
+</html>

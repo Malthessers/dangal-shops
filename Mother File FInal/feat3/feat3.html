@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Spotlight - Dangal Shop</title>
+    <link rel="stylesheet" type="text/css" href="feat3.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a href="../HomePage/index.html" class="logo">
+            <img src="../images/dangallogov1.png" alt="Dangal Logo">
+        </a>
+        <ul class="navlist">
+            <li><a href="../HomePage/index.html">Home</a></li>
+            <li><a href="../Main Shop/shop.html" class="active">Shop</a></li>
+            <li><a href="../About Us/about.html">About</a></li>
+            <li><a href="../Contact Us/contact.html">Contact</a></li>
+        </ul>
+        <div class="header-icons">
+            <a href="../Cart/cart.html"><i class='bx bx-cart'></i></a>
+            <a href="../Login/login.html"><i class='bx bxs-user-circle'></i></a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+
+    <!-- Product Spotlight Section -->
+    <section class="product-spotlight">
+        <div class="spotlight-container">
+            <div class="product-images">
+                <div class="main-image">
+                    <img src="../HomePage/new3.png" alt="Product Name" id="mainImage">
+                </div>
+                <div class="thumbnail-gallery">
+                    <img src="../HomePage/new3.png" alt="Thumbnail 1" class="thumbnail active" onclick="changeImage(this.src)">
+                    
+                </div>
+            </div>
+            
+            <div class="product-details">
+                <div class="product-category">On - Sale</div>
+                <h1 class="product-title">Wooden Wind Chimes</h1>
+                
+                <div class="product-rating">
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star'></i>
+                    <i class='bx bxs-star-half'></i>
+                    <span>(4.5/5)</span>
+                    <span class="review-count">108 Reviews</span>
+                </div>
+                
+                <div class="product-price">
+                    <span class="current-price">₱500.00</span>
+                    <span class="original-price">₱550.00</span>
+                    <span class="discount">-10%</span>
+                </div>
+                
+                <div class="product-description">
+                    <h3>Description</h3>
+                    <p>Wooden wind chimes offer a soothing, natural melody, blending seamlessly into outdoor and indoor spaces with their rustic charm. Crafted from various woods like bamboo, teak, or oak, they produce a range of tones from gentle tinkles to deeper, resonant sounds, depending on the wood's density and the chime's design. These chimes not only add an auditory element to their surroundings but also serve as a visually appealing, organic decoration, bringing a sense of tranquility and connection to nature.</p>
+                </div>
+                
+                <div class="product-variants">
+                    <h3>Available Options</h3>
+                    <div class="variant-options">
+                        <button class="variant-btn active">Small</button>
+                        <button class="variant-btn">Medium</button>
+                        <button class="variant-btn">Large</button>
+                    </div>
+                </div>
+                
+                <div class="quantity-selector">
+                    <h3>Quantity</h3>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus"><i class='bx bx-minus'></i></button>
+                        <input type="number" value="1" min="1" class="quantity-input">
+                        <button class="quantity-btn plus"><i class='bx bx-plus'></i></button>
+                    </div>
+                    <span class="stock-status">In Stock (15 items left)</span>
+                </div>
+                
+                <div class="product-actions">
+                    <button class="add-to-cart">
+                        <i class='bx bx-cart-add'></i>
+                        Add to Cart
+                    </button>
+                    <button class="buy-now">Buy Now</button>
+                    
+                </div>
+                
+                <div class="additional-info">
+                    <div class="info-item">
+                        <i class='bx bx-check-shield'></i>
+                        <span>Authentic Product</span>
+                    </div>
+                    <div class="info-item">
+                        <i class='bx bx-package'></i>
+                        <span>Free Shipping</span>
+                    </div>
+                    <div class="info-item">
+                        <i class='bx bx-refresh'></i>
+                        <span>30-Day Returns</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact/Footer -->
+    <section class="contact">
+        <div class="main-contact">
+            <h3>Dangal</h3>
+            <h5>Come Connect with us</h5>
+            <div class="icons">
+            <a href="https://www.facebook.com/share/1KBQuQ5Re6/?mibextid=wwXIfr"><i class='bx bxl-facebook-square'></i></a>
+            <a href="https://www.instagram.com/dnglwb_?igsh=MWFuOWRpd3libXAyNA%3D%3D&utm_source=qr"><i class='bx bxl-instagram' ></i></a>
+                <a href="#"><i class='bx bxl-twitter' ></i></a>
+            </div>
+        </div>
+
+        <div class="main-contact">
+            <h3>Explore</h3>   
+                <li><a href="../HomePage/index.html">Home</a></li>
+                <li><a href="../Main Shop/shop.html">Shop</a></li>
+                <li><a href="../About Us/about.html">About</a></li>
+                <li><a href="../Contact Us/contact.html">Contact</a></li>
+        </div>
+
+        <div class="main-contact">
+            <h3>Our Services</h3>
+            <li><a href="../assistant/assistant.html">Chat With Us</a></li>
+            <li><a href="../track/track.html">Track Your Order</a></li>
+            <li><a href="../Seller/seller.html">Seller Dashboard</a></li>
+        </div>
+
+        <div class="main-contact">
+            <h3>Our Shopping</h3>
+            <li><a href="../clothing/clothing.html">Clothing Store</a></li>
+            <li><a href="../jewelry/jewelry.html">Trending Jewelry</a></li>
+            <li><a href="../accessories/accessories.html">Accessories</a></li>
+            <li><a href="../sales/sale.html">On-sale Items</a></li>
+        </div>
+
+    </section>
+
+    <div class="last-text">
+        <p>© 2025 Dangal. All Rights Reserved.</p>
+    </div>
+
+    <script src="feat3.js"></script>
+</body>
+</html>

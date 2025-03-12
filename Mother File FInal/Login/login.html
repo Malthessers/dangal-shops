@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login - Dangal Shop</title>
+    <link rel="stylesheet" type="text/css" href="login.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lora:wght@400;700&family=Crimson+Text:wght@400;700&family=Prata&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- header -->
+    <header>
+        <a href="../HomePage/index.html" class="logo"><img src="../images/dangallogov1.png"></a>
+        <ul class="navlist">
+            <li><a href="../HomePage/index.html">Home</a></li>
+            <li><a href="../Main Shop/shop.html">Shop</a></li>
+            <li><a href="../About Us/about.html">About</a></li>
+            <li><a href="../Contact Us/contact.html">Contact</a></li>
+        </ul>
+        <div class="header-icons">
+            <a href="../Cart/cart.html"><i class='bx bx-cart'></i></a>
+            <a href="../Login/login.html" class="active"><i class='bx bxs-user-circle'></i></a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+
+    <!-- Login Form -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-form-container">
+                <div class="form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Log in to access your Dangal account</p>
+                </div>
+                
+                <form class="auth-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-group">
+                            <i class='bx bx-envelope'></i>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-group">
+                            <i class='bx bx-lock-alt'></i>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            <i class='bx bx-hide toggle-password'></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="submit" class="auth-btn">Login</button>
+                    
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+                    
+                    <div class="social-login">
+                        <button type="button" class="social-btn google">
+                            <i class='bx bxl-google'></i>
+                            Continue with Google
+                        </button>
+                        <button type="button" class="social-btn facebook">
+                            <i class='bx bxl-facebook'></i>
+                            Continue with Facebook
+                        </button>
+                    </div>
+                    
+                    <div class="auth-redirect">
+                        Don't have an account? <a href="../Signup/signup.html">Sign up</a>
+                    </div>
+
+                    <div class="seller-redirect">
+                        Are you a seller? <a href="../Login2/login2.html">Login</a>
+                    </div>
+                    
+                </form>
+            </div>
+            
+            <div class="auth-image">
+                <img src="../images/dangallogov1.png" alt="Dangal Shop">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Experience the Philippines</h3>
+                        <p>Shop authentic Filipino products from all regions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JS link -->
+    <script src="login.js"></script>
+</body>
+</html>

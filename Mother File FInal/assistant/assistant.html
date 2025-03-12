@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dangal AI Assistant</title>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lora', serif;
+        }
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --main-color: #8a8f70;
+            --sub-color: #2f3a2a;
+            --light-color: #f8f9f6;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --message-shadow: rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--bg-color);
+            padding: 12px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 15px var(--shadow-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 45px;
+            width: auto;
+        }
+
+        .logo h1 {
+            margin-left: 12px;
+            font-size: 1.4rem;
+            color: var(--main-color);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Back Button */
+        .back-button {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            background-color: var(--main-color);
+            color: var(--bg-color);
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .back-button i {
+            margin-right: 5px;
+            font-size: 1.1rem;
+        }
+
+        .back-button:hover {
+            background-color: var(--sub-color);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1000px;
+            margin: 90px auto 30px;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            background-color: var(--bg-color);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px var(--shadow-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 75vh;
+        }
+
+        .chat-header {
+            background-color: var(--main-color);
+            color: var(--bg-color);
+            padding: 18px 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-header i {
+            font-size: 22px;
+            margin-right: 12px;
+        }
+
+        .chat-header h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--light-color);
+            background-image: 
+                radial-gradient(rgba(138, 143, 112, 0.03) 2px, transparent 2px),
+                radial-gradient(rgba(138, 143, 112, 0.03) 2px, transparent 2px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+
+        .message {
+            max-width: 75%;
+            margin-bottom: 20px;
+            padding: 14px 18px;
+            border-radius: 18px;
+            line-height: 1.6;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+            box-shadow: 0 2px 10px var(--message-shadow);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .bot-message {
+            background-color: var(--bg-color);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+            color: var(--text-color);
+        }
+
+        .user-message {
+            background-color: var(--main-color);
+            color: var(--bg-color);
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 8px;
+            text-align: right;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px 18px;
+            background-color: var(--bg-color);
+            border-radius: 18px;
+            border-bottom-left-radius: 5px;
+            align-self: flex-start;
+            box-shadow: 0 2px 10px var(--message-shadow);
+            display: none;
+        }
+
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background-color: var(--main-color);
+            border-radius: 50%;
+            margin: 0 3px;
+            display: inline-block;
+            animation: typing 1s infinite ease-in-out;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 18px 20px;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            background-color: var(--light-color);
+        }
+
+        .chat-input input:focus {
+            border-color: var(--main-color);
+            box-shadow: 0 0 0 2px rgba(138, 143, 112, 0.2);
+        }
+
+        .chat-input button {
+            background-color: var(--main-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            margin-left: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(138, 143, 112, 0.3);
+        }
+
+        .chat-input button:hover {
+            background-color: var(--sub-color);
+            transform: translateY(-2px);
+        }
+
+        .chat-input button:active {
+            transform: translateY(0);
+        }
+
+        .chat-input button i {
+            font-size: 20px;
+        }
+
+        /* Suggestion Chips */
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 20px;
+        }
+
+        .suggestion-chip {
+            background-color: var(--light-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 10px 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px var(--message-shadow);
+        }
+
+        .suggestion-chip:hover {
+            background-color: var(--main-color);
+            color: var(--bg-color);
+            border-color: var(--main-color);
+            transform: translateY(-2px);
+        }
+
+        .suggestion-chip:active {
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--main-color);
+            color: var(--bg-color);
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9rem;
+            box-shadow: 0 -2px 10px var(--shadow-color);
+        }
+
+        /* Scrollbar Styling */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: var(--light-color);
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background-color: var(--main-color);
+            border-radius: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin-top: 80px;
+            }
+            
+            .chat-container {
+                height: 78vh;
+            }
+            
+            .message {
+                max-width: 85%;
+            }
+            
+            .logo h1 {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chat-header h2 {
+                font-size: 1rem;
+            }
+            
+            .logo img {
+                height: 38px;
+            }
+            
+            .logo h1 {
+                font-size: 1rem;
+                margin-left: 8px;
+            }
+            
+            .suggestion-chips {
+                gap: 8px;
+            }
+            
+            .suggestion-chip {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+
+            .message {
+                padding: 12px 15px;
+                max-width: 90%;
+            }
+
+            .chat-input {
+                padding: 15px;
+            }
+
+            .chat-input input {
+                padding: 12px 15px;
+            }
+
+            .chat-input button {
+                width: 42px;
+                height: 42px;
+            }
+            
+            .back-button {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+           <a href="../HomePage/index.html"> <img src="../images/dangallogov1.png" alt="Dangal Logo"> </a>
+            <h1>Dangal Assistant</h1>
+        </div>
+        <a href="../Contact Us/contact.html" class="back-button">
+            <i class='bx bx-arrow-back'></i> Back to Contact
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">
+                <i class='bx bx-message-rounded-dots'></i>
+                <h2>Ask me anything about Dangal</h2>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    Hello! I'm the Dangal AI Assistant. How can I help you today?
+                    <div class="message-time">Just now</div>
+                </div>
+                
+                <div class="typing-indicator" id="typingIndicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <div class="suggestion-chips">
+                <div class="suggestion-chip" onclick="askQuestion('Tell me about Dangal')">About Dangal</div>
+                <div class="suggestion-chip" onclick="askQuestion('How do I place an order?')">How to order</div>
+                <div class="suggestion-chip" onclick="askQuestion('What products do you offer?')">Products</div>
+                <div class="suggestion-chip" onclick="askQuestion('How can I sell my products?')">Become a seller</div>
+                <div class="suggestion-chip" onclick="askQuestion('Shipping information')">Shipping</div>
+                <div class="suggestion-chip" onclick="askQuestion('How do I track my order?')">Track order</div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Type your question here..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">
+                    <i class='bx bx-send'></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Dangal. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Enhanced knowledge base for the AI assistant
+        const knowledgeBase = {
+            "about": [
+                "Dangal is an online platform dedicated to celebrating and promoting the rich diversity of Filipino-made products. From the northern highlands of the Cordilleras to the sun-kissed beaches of Mindanao, we promote both native and post-modern Filipino-made goods across the different regions of the Philippines.",
+                "Our mission is to empower local artisans, weavers, craftsmen, and entrepreneurs from all corners of the Philippines by providing them with a platform to showcase their unique products to a global audience.",
+                "Founded in 2025, we've grown to support over 50 local sellers across the Philippines, helping preserve traditional crafts while creating sustainable livelihoods."
+            ],
+            "location": [
+                "Dangal is a Filipino e-commerce platform that operates throughout the Philippines.",
+                "Our main office is located in Metro Manila, Philippines.",
+                "We serve customers across all regions of the Philippines including Luzon, Visayas, and Mindanao."
+            ],
+            "seller_application": [
+                "To apply as a seller on Dangal, follow these steps:",
+                "1. Create an account on our website",
+                "2. Click on 'Become a Seller' in your account dashboard",
+                "3. Complete the seller application form",
+                "4. Submit required documents (valid ID, business permits if applicable)",
+                "5. Wait for approval (usually within 3-5 business days)",
+                "Once approved, you can start listing your products on our platform."
+            ],
+            "products": [
+                "Dangal specializes in authentic Filipino products across various categories:",
+                "• Traditional Filipino crafts and handmade items",
+                "• Local fashion and accessories",
+                "• Filipino food products and delicacies",
+                "• Home decor with Filipino cultural elements",
+                "• Beauty products made with local ingredients",
+                "We focus on promoting products that showcase Filipino culture, craftsmanship, and heritage."
+            ],
+            "product_authenticity": [
+                "Yes, all our products are 100% authentic. Here's how we ensure this:",
+                "• We work directly with local artisans, cooperatives, and small businesses across the Philippines. This ensures that every item is made by skilled craftsmen who are deeply rooted in their cultural traditions.",
+                "• We provide details about the artisans, their techniques, and the cultural significance of the item. This transparency allows you to connect with the product on a deeper level.",
+                "• By purchasing from Dangal, you're supporting local livelihoods and helping to preserve traditional crafts. A portion of our proceeds goes back to the communities, ensuring that these practices continue for generations."
+            ],
+            "contact": [
+                "You can contact Dangal support through multiple channels:",
+                "• Email: support@dangal.ph or DangalCorp@gmail.com",
+                "• Phone: (02) 8123-4567 or 73392292020",
+                "• Live chat on our website (available 9AM-6PM PHT, Monday to Friday)",
+                "• Contact form on our website",
+                "• Facebook page: 'Dangal'",
+                "Our customer service team typically responds within 24-48 hours."
+            ],
+            "customer_service_hours": [
+                "Our customer service hours are:",
+                "• Weekdays: 9 AM to 6 PM",
+                "• Saturdays: 10 AM to 5 PM",
+                "• Closed on Sundays and holidays",
+                "During these hours, our team is available to assist you with any inquiries or concerns. If you reach out outside of these hours, we'll get back to you as soon as possible on the next business day."
+            ],
+            "shipping": [
+                "Dangal offers various shipping options:",
+                "• Standard shipping (varies by location)",
+                "• Express shipping (faster delivery)",
+                "• Same-day delivery (for select areas in Metro Manila)",
+                "Shipping fees vary based on location and order size. Free shipping is available for orders above ₱1,500."
+            ],
+            "shipping_locations": [
+                "We are pleased to offer shipping services to various locations across the Philippines!",
+                "We currently deliver to major cities and provinces, including Metro Manila, Cebu, Davao, Quezon City, Makati, Taguig, and many more.",
+                "To see if we ship to your specific area, simply enter your address during checkout, and we'll confirm if we can deliver to you.",
+                "If you have any questions or need help, our customer support team is happy to assist!"
+            ],
+            "shipping_costs": [
+                "Shipping costs depend on the destination and the weight of your order. Here's a general guideline for our shipping rates within the Philippines:",
+                "Metro Manila:",
+                "• Standard Shipping: ₱50 - ₱100",
+                "• Express Shipping: ₱100 - ₱200",
+                "",
+                "Luzon (Outside Metro Manila):",
+                "• Standard Shipping: ₱100 - ₱180",
+                "• Express Shipping: ₱180 - ₱300",
+                "",
+                "Visayas:",
+                "• Standard Shipping: ₱150 - ₱250",
+                "• Express Shipping: ₱250 - ₱400",
+                "",
+                "Mindanao:",
+                "• Standard Shipping: ₱180 - ₱300",
+                "• Express Shipping: ₱300 - ₱500",
+                "",
+                "Please note that shipping costs may vary based on promotional offers, special items, or specific courier fees. For orders above ₱1,500, we offer free shipping."
+            ],
+            "delivery_time": [
+                "Delivery times depend on your location and the shipping method you choose. Here's a general estimate for shipping durations within the Philippines:",
+                "Metro Manila:",
+                "• Standard Shipping: 1 - 3 business days",
+                "• Express Shipping: 1 - 2 business days",
+                "",
+                "Luzon (Outside Metro Manila):",
+                "• Standard Shipping: 3 - 5 business days",
+                "• Express Shipping: 2 - 4 business days",
+                "",
+                "Visayas:",
+                "• Standard Shipping: 4 - 7 business days",
+                "• Express Shipping: 3 - 5 business days",
+                "",
+                "Mindanao:",
+                "• Standard Shipping: 5 - 8 business days",
+                "• Express Shipping: 4 - 6 business days",
+                "",
+                "Please note that these are estimated delivery times and may vary slightly due to factors such as weather conditions, holidays, or courier service delays."
+            ],
+            "order_tracking": [
+                "Tracking your order is easy! Once your order has been shipped, you will receive a confirmation email that includes your tracking number and a link to the courier's tracking page. Here's how you can track your order:",
+                "1. Check Your Email: Look for an email confirmation with your tracking number and link.",
+                "2. Visit Our Website: Go to the 'Order Tracking' section on our website and enter your order number and email address to view the status.",
+                "3. Courier's Tracking Page: Use the tracking number provided in the confirmation email to check the shipping carrier's website directly.",
+                "4. Contact Customer Support: If you have any issues or need further assistance, feel free to contact our customer support team."
+            ],
+            "returns": [
+                "Our return policy allows returns within 7 days of receiving your order.",
+                "To initiate a return:",
+                "1. Log in to your account",
+                "2. Go to 'Order History'",
+                "3. Select the order and click 'Return Item'",
+                "4. Follow the instructions to complete the return process",
+                "Please note that items must be unused and in their original packaging."
+            ],
+            "refunds": [
+                "Refunds are processed within 7 days after we receive your returned item.",
+                "The refund will be issued to the original payment method used for the purchase.",
+                "You will receive an email notification once your refund has been processed."
+            ],
+            "payment": [
+                "We strive to make your shopping experience as convenient as possible by offering a variety of payment methods. Currently, we accept:",
+                "Credit Cards:",
+                "• Visa",
+                "• MasterCard",
+                "",
+                "Debit Cards:",
+                "• Visa Debit",
+                "• Mastercard Debit",
+                "",
+                "E-Wallets:",
+                "• GCash",
+                "• PayMaya",
+                "• GrabPay",
+                "",
+                "Bank Transfers:",
+                "• Direct bank deposit (details provided during checkout)",
+                "",
+                "Cash on Delivery (COD):",
+                "• Available in select areas",
+                "",
+                "Buy Now, Pay Later:",
+                "• Installment payment options available through specific partners"
+            ],
+            "payment_security": [
+                "Yes, we take your payment security very seriously. Here's how we ensure your information is protected:",
+                "Encryption Technology:",
+                "• We use industry-standard SSL (Secure Socket Layer) encryption to securely transmit your payment details.",
+                "",
+                "Payment Processing:",
+                "• All transactions are processed through trusted and secure payment gateways, which comply with strict security standards.",
+                "",
+                "Data Protection:",
+                "• Your payment information is never stored on our servers. We only keep the essential details necessary to process your order."
+            ],
+            "how_to_order": [
+                "Placing an order on our website is simple and hassle-free:",
+                "1. Browse our products and add items to your cart",
+                "2. Click on the shopping cart icon to review your selected items",
+                "3. Adjust quantities or remove items if needed",
+                "4. Click 'Proceed to Checkout' when you're ready",
+                "5. Provide your shipping address and contact information",
+                "6. Choose your preferred shipping method (standard or express)",
+                "7. Select your payment option: Cash on Delivery Only",
+                "8. Enter your payment details securely",
+                "9. Review your order summary, including items, shipping fees, and total cost",
+                "10. Click 'Place Order' to complete your purchase"
+            ],
+            "password_reset": [
+                "You can reset your account's password by following these steps:",
+                "1. Click on the 'Login' button at the top of the page",
+                "2. Select 'Forgot Password'",
+                "3. Enter the email address associated with your account",
+                "4. Check your email for a password reset link",
+                "5. Click the link and follow the instructions to create a new password",
+                "If you don't receive the email within a few minutes, please check your spam folder or contact our support team for assistance."
+            ],
+            "account_settings": [
+                "You can manage your account by updating your profile settings, changing your preferences, and personalizing your dashboard.",
+                "Simply log in, go to the 'Account Settings' section, and explore the available options. You can also update your notification settings and saved preferences to enhance your experience.",
+                "If you need any assistance, feel free to reach out to our support team."
+            ],
+            "seller_benefits": [
+                "The following are the benefits that you will get from availing the seller membership:",
+                "• Promoting and advertising your products on the website",
+                "• Regular notice regarding forthcoming bazaars and exhibits that sellers/business owners can join",
+                "• Coordination with schools for field trip events and potential on-the-job training opportunities",
+                "• Link up to hotels, restaurants, etc. for increased visibility and revenue generation",
+                "• Access to our growing customer base of Filipino craft enthusiasts"
+            ],
+            "seller_requirements": [
+                "To sell on Dangal, you need to meet the following requirements:",
+                "• You must be a Filipino seller or store located in any region of the Philippines",
+                "• Your products must be native and/or post-modern Filipino-made",
+                "• You need to pay ₱500 per month to affiliate with us (limited up to 24 months per seller/store)",
+                "• You must provide proper documentation of your business",
+                "• Your products must meet our quality standards",
+                "For more details, please contact our email at DangalCorp@gmail.com or fill out the Google form provided on our website."
+            ],
+            "fees": [
+                "For sellers, Dangal charges the following fees:",
+                "• Registration: Free",
+                "• Monthly affiliation fee: ₱500 per month",
+                "• Commission: 5-10% depending on product category",
+                "• Featured listing fee (optional): ₱500 per week",
+                "• Promotion packages: Starting at ₱1,000",
+                "There are no hidden fees, and payments are processed every 15 days."
+            ],
+            "siomai":[
+                "siomai ka!",
+                "https://www.facebook.com/tricia.almeda.7#"
+            ],
+            "jean": [
+                "Zaxia In love",
+                "I love Jean Albert Astejada Quinones",
+                "lumiere my darling hehe"
+            ],
+        };
+
+        // Default responses for unknown queries
+        const defaultResponses = [
+            "I don't have specific information about that yet. Would you like to know about our location, how to place an order, or our products instead?",
+            "I'm not sure about that. Can I help you with information about shipping, returns, or payment methods?",
+            "I don't have that information at the moment. Would you like to know about becoming a seller or our contact information?",
+            "I'm still learning about that topic. In the meantime, can I assist you with questions about our products, shipping options, or payment methods?"
+        ];
+
+        // Function to get a random item from an array
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        // Function to get current time in HH:MM format
+        function getCurrentTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            
+            return `${hours}:${minutes} ${ampm}`;
+        }
+
+        // Function to add a message to the chat
+        function addMessage(text, isUser = false) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = isUser ? 'message user-message' : 'message bot-message';
+            
+            messageDiv.innerHTML = text + `<div class="message-time">${getCurrentTime()}</div>`;
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Function to show typing indicator
+        function showTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.style.display = 'flex';
+            document.getElementById('chatMessages').appendChild(typingIndicator);
+            
+            // Scroll to bottom to show the typing indicator
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Function to hide typing indicator
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+
+        // Function to process user input and generate response
+        function processInput(userInput) {
+            userInput = userInput.toLowerCase();
+            let response = "";
+            
+            // Check for keywords in the user input
+            if (userInput.includes("about") || userInput.includes("dangal") || userInput.includes("website") || userInput.includes("mission")) {
+                response = knowledgeBase.about.join("<br><br>");
+            } 
+            else if (userInput.includes("location") || userInput.includes("where") || userInput.includes("address") || userInput.includes("office")) {
+                response = knowledgeBase.location.join("<br><br>");
+            } 
+            else if ((userInput.includes("seller") && userInput.includes("apply")) || userInput.includes("application") || userInput.includes("become a seller") || (userInput.includes("how") && userInput.includes("sell"))) {
+                response = knowledgeBase.seller_application.join("<br>");
+            }
+            else if (userInput.includes("product") || userInput.includes("offer") || userInput.includes("item") || userInput.includes("sell")) {
+                response = knowledgeBase.products.join("<br>");
+            }
+            else if (userInput.includes("authentic") || userInput.includes("real") || userInput.includes("genuine") || userInput.includes("fake")) {
+                response = knowledgeBase.product_authenticity.join("<br><br>");
+            }
+            else if (userInput.includes("contact") || userInput.includes("support") || userInput.includes("help") || userInput.includes("service") || userInput.includes("reach")) {
+                response = knowledgeBase.contact.join("<br>");
+            }
+            else if (userInput.includes("service hours") || userInput.includes("support hours") || userInput.includes("operating hours") || userInput.includes("when") && userInput.includes("support")) {
+                response = knowledgeBase.customer_service_hours.join("<br>");
+            }
+            else if ((userInput.includes("ship") && userInput.includes("where")) || userInput.includes("delivery location")) {
+                response = knowledgeBase.shipping_locations.join("<br><br>");
+            }
+            else if ((userInput.includes("ship") && userInput.includes("cost")) || userInput.includes("shipping fee") || userInput.includes("delivery cost") || userInput.includes("how much") && userInput.includes("shipping")) {
+                response = knowledgeBase.shipping_costs.join("<br>");
+            }
+            else if (userInput.includes("delivery time") || userInput.includes("how long") || userInput.includes("when") && userInput.includes("receive")) {
+                response = knowledgeBase.delivery_time.join("<br>");
+            }
+            else if (userInput.includes("track") || userInput.includes("where") && userInput.includes("order") || userInput.includes("status")) {
+                response = knowledgeBase.order_tracking.join("<br><br>");
+            }
+            else if (userInput.includes("return") || userInput.includes("exchange")) {
+                response = knowledgeBase.returns.join("<br>");
+            }
+            else if (userInput.includes("refund") || userInput.includes("money back")) {
+                response = knowledgeBase.refunds.join("<br>");
+            }
+            else if (userInput.includes("payment") || userInput.includes("pay") || userInput.includes("checkout")) {
+                response = knowledgeBase.payment.join("<br>");
+            }
+            else if (userInput.includes("secure") || userInput.includes("safe") || userInput.includes("protection")) {
+                response = knowledgeBase.payment_security.join("<br><br>");
+            }
+            else if (userInput.includes("how") && userInput.includes("order") || userInput.includes("place order") || userInput.includes("buy")) {
+                response = knowledgeBase.how_to_order.join("<br>");
+            }
+            else if (userInput.includes("password") || userInput.includes("reset") || userInput.includes("forgot")) {
+                response = knowledgeBase.password_reset.join("<br>");
+            }
+            else if (userInput.includes("account") || userInput.includes("profile") || userInput.includes("settings")) {
+                response = knowledgeBase.account_settings.join("<br><br>");
+            }
+            else if (userInput.includes("seller benefit") || userInput.includes("benefit") && userInput.includes("selling")) {
+                response = knowledgeBase.seller_benefits.join("<br>");
+            }
+            else if (userInput.includes("seller requirement") || userInput.includes("requirement") && userInput.includes("sell")) {
+                response = knowledgeBase.seller_requirements.join("<br>");
+            }
+            else if (userInput.includes("fee") || userInput.includes("cost") || userInput.includes("charge") || userInput.includes("commission")) {
+                response = knowledgeBase.fees.join("<br>");
+            }
+            else if (userInput.includes("hello") || userInput.includes("hi") || userInput.includes("hey")) {
+                response = "Hello! How can I assist you with Dangal today?";
+            }
+            else if (userInput.includes("thank")) {
+                response = "You're welcome! Is there anything else I can help you with?";
+            }
+            else if (userInput.includes("bye") || userInput.includes("goodbye")) {
+                response = "Thank you for chatting with Dangal Assistant. Have a great day!";
+            }
+            else if (userInput.includes("siomai") || userInput.includes("patricia") || userInput.includes("castillo") || userInput.includes("anika")) {
+                response = knowledgeBase.siomai.join("<br><br>");
+            } 
+            else if (userInput.includes("hehehe") || userInput.includes("jean") || userInput.includes("quinones") || userInput.includes("i love you")) {
+                response = knowledgeBase.jean.join("<br><br>");
+            } 
+            else {
+                response = getRandomItem(defaultResponses);
+            }
+            
+            return response;
+        }
+
+        // Function to handle sending messages
+function sendMessage() {
+    const userInput = document.getElementById('userInput');
+    const message = userInput.value.trim();
+    
+    if (message) {
+        // Add user message to chat
+        addMessage(message, true);
+        
+        // Clear input field
+        userInput.value = '';
+        
+        // Show typing indicator
+        showTypingIndicator();
+        
+        // Process after a short delay to simulate thinking
+        setTimeout(() => {
+            // Hide typing indicator
+            hideTypingIndicator();
+            
+            // Process input and add response
+            const response = processInput(message);
+            addMessage(response);
+        }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
+    }
+}
+
+// Function to handle Enter key press
+function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+}
+
+// Function to handle suggestion chip clicks
+function askQuestion(question) {
+    document.getElementById('userInput').value = question;
+    sendMessage();
+}
+
+// Initialize with some suggested questions
+document.addEventListener('DOMContentLoaded', () => {
+    // Add a slight delay for the initial message
+    setTimeout(() => {
+        addMessage("You can ask me about Dangal's location, how to apply as a seller, our products, shipping, returns, payment methods, and more!");
+    }, 500);
+    
+    // Focus on input field
+    document.getElementById('userInput').focus();
+});
+</script>
