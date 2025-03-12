@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard | Dangal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lora:wght@400;700&family=Crimson+Text:wght@400;700&family=Prata&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="seller.css">
+    <style>
+        /* Additional styles for the demo tools section */
+        .demo-tools {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #8a8f70;
+        }
+        
+        .demo-tools h3 {
+            margin-top: 0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .demo-tools p {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        #generateOrderBtn {
+            background-color: #8a8f70;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        #generateOrderBtn:hover {
+            background-color: #767a5f;
+        }
+        
+        #generationResult {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        #generationResult.success {
+            display: block;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        #generationResult.error {
+            display: block;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        #generationResult.loading {
+            display: block;
+            background-color: #e9ecef;
+            color: #495057;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Header -->
+    <header>
+        <a href="../HomePage/index.html" class="logo"><img src="../images/dangallogov1.png"></a>
+        <ul class="navlist">
+            <li><a href="../HomePage/index.html">Home</a></li>
+            <li><a href="../Main Shop/shop.html">Shop</a></li>
+            <li><a href="../About Us/about.html">About</a></li>
+            <li><a href="../Contact Us/contact.html">Contact</a></li>
+        </ul>
+        <div class="header-icons">
+            <a href="../Cart/cart.html"><i class='bx bx-cart'></i></a>
+            <a href="../Login/login.html" class="active"><i class='bx bxs-user-circle'></i></a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+
+    <!-- Seller Subheader -->
+    <div class="seller-subheader">
+        <div class="seller-info">
+            <div class="seller-avatar">
+                <img src="../HomePage/brand1.jpg" alt="Seller Profile">
+            </div>
+            <div class="seller-details">
+                <h3>Nueva Segovia Consortium of Cooperatives</h3>
+                <span class="seller-status online">Online</span>
+            </div>
+        </div>
+        <nav class="seller-nav">
+            <ul>
+                <li><a href="#" class="active"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-box"></i> Products</a></li>
+                <li><a href="#"><i class="fas fa-shopping-bag"></i> Orders</a></li>
+                <li><a href="#"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard-content">
+        <div class="dashboard-header">
+            <h1>Seller Dashboard</h1>
+            <div class="date-selector">
+                <button class="date-btn active">Today</button>
+                <button class="date-btn">This Week</button>
+                <button class="date-btn">This Month</button>
+                <button class="date-btn custom"><i class="far fa-calendar"></i> Custom</button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon sales">
+                    <i class="fas fa-peso-sign"></i>
+                </div>
+                <div class="stat-details">
+                    <h3>Total Sales</h3>
+                    <p class="stat-value">₱24,521.00</p>
+                    <p class="stat-change increase"><i class="fas fa-arrow-up"></i> 12.5% from last period</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon orders">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="stat-details">
+                    <h3>Orders</h3>
+                    <p class="stat-value">78</p>
+                    <p class="stat-change increase"><i class="fas fa-arrow-up"></i> 8.2% from last period</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon visitors">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-details">
+                    <h3>Store Visitors</h3>
+                    <p class="stat-value">1,245</p>
+                    <p class="stat-change increase"><i class="fas fa-arrow-up"></i> 23.7% from last period</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon conversion">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <div class="stat-details">
+                    <h3>Conversion Rate</h3>
+                    <p class="stat-value">6.3%</p>
+                    <p class="stat-change decrease"><i class="fas fa-arrow-down"></i> 1.2% from last period</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Tools Section -->
+        <div class="demo-tools">
+            <h3><i class="fas fa-vial"></i> Demo Tools</h3>
+            <p>Generate random orders using actual products from your website. This will create sample data in your reports.</p>
+            <button id="generateOrderBtn">
+                <i class="fas fa-magic"></i> Generate Random Order
+            </button>
+            <div id="generationResult"></div>
+        </div>
+
+        <!-- Two Column Layout -->
+        <div class="dashboard-grid">
+            <!-- Left Column -->
+            <div class="dashboard-column">
+                <!-- Recent Orders -->
+                <div class="dashboard-card orders-card">
+                    <div class="card-header">
+                        <h2>Recent Orders</h2>
+                        <a href="#" class="view-all">View All</a>
+                    </div>
+                    <div class="order-list">
+                        <div class="order-item">
+                            <div class="order-info">
+                                <h4>Order #34587</h4>
+                                <p>Patricia Almeda • 2 hours ago</p>
+                            </div>
+                            <div class="order-status pending">
+                                <span>Pending</span>
+                                <p class="order-price">₱1,250.00</p>
+                            </div>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <h4>Order #34581</h4>
+                                <p>Russell Ugto • 5 hours ago</p>
+                            </div>
+                            <div class="order-status processing">
+                                <span>Processing</span>
+                                <p class="order-price">₱3,750.00</p>
+                            </div>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <h4>Order #34569</h4>
+                                <p>Pola Alonzo • Yesterday</p>
+                            </div>
+                            <div class="order-status shipped">
+                                <span>Shipped</span>
+                                <p class="order-price">₱890.00</p>
+                            </div>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <h4>Order #34561</h4>
+                                <p>Ivan San Andres • Yesterday</p>
+                            </div>
+                            <div class="order-status delivered">
+                                <span>Delivered</span>
+                                <p class="order-price">₱2,150.00</p>
+                            </div>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-info">
+                                <h4>Order #34555</h4>
+                                <p>Jean Albert Quinones • 2 days ago</p>
+                            </div>
+                            <div class="order-status delivered">
+                                <span>Delivered</span>
+                                <p class="order-price">₱1,820.00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Inventory Management -->
+                <div class="dashboard-card inventory-card">
+                    <div class="card-header">
+                        <h2>Inventory Status</h2>
+                        <a href="#" class="view-all">Manage</a>
+                    </div>
+                    <div class="inventory-summary">
+                        <div class="inventory-stat">
+                            <span class="inventory-number">126</span>
+                            <span class="inventory-label">Products</span>
+                        </div>
+                        <div class="inventory-stat">
+                            <span class="inventory-number">24</span>
+                            <span class="inventory-label">Low Stock</span>
+                        </div>
+                        <div class="inventory-stat">
+                            <span class="inventory-number">8</span>
+                            <span class="inventory-label">Out of Stock</span>
+                        </div>
+                    </div>
+                    <div class="inventory-list">
+                        <div class="inventory-item low-stock">
+                            <div class="product-image">
+                                <img src="../images/longban1.png" alt="Handcrafted Bag">
+                            </div>
+                            <div class="product-details">
+                                <h4>Handcrafted Bag</h4>
+                                <p>ID: #PRD001 • Category: Bags</p>
+                            </div>
+                            <div class="stock-info">
+                                <span class="stock-status low">Low Stock</span>
+                                <p>3 left</p>
+                            </div>
+                        </div>
+                        <div class="inventory-item out-stock">
+                            <div class="product-image">
+                                <img src="../images/longban2.png" alt="T'nalak Bag">
+                            </div>
+                            <div class="product-details">
+                                <h4>T'nalak Bag</h4>
+                                <p>ID: #PRD014 • Category: Bags</p>
+                            </div>
+                            <div class="stock-info">
+                                <span class="stock-status out">Out of Stock</span>
+                                <p>Restock</p>
+                            </div>
+                        </div>
+                        <div class="inventory-item">
+                            <div class="product-image">
+                                <img src="../images/longban4.png" alt="Floral Handkerchief">
+                            </div>
+                            <div class="product-details">
+                                <h4>Floral Handkerchief</h4>
+                                <p>ID: #PRD032 • Category: Accessories</p>
+                            </div>
+                            <div class="stock-info">
+                                <span class="stock-status">In Stock</span>
+                                <p>45 left</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column -->
+            <div class="dashboard-column">
+                <!-- Sales Analytics -->
+                <div class="dashboard-card analytics-card">
+                    <div class="card-header">
+                        <h2>Sales Analytics</h2>
+                        <div class="card-actions">
+                            <button class="period-toggle active">Week</button>
+                            <button class="period-toggle">Month</button>
+                            <button class="period-toggle">Year</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="sales-chart"></canvas>
+                    </div>
+                    <div class="analytics-summary">
+                        <div class="summary-item">
+                            <span class="summary-label">Peak Day</span>
+                            <span class="summary-value">Saturday</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Avg. Daily Sales</span>
+                            <span class="summary-value">₱3,503</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Growth</span>
+                            <span class="summary-value positive">+15.7%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notification Center -->
+                <div class="dashboard-card notification-card">
+                    <div class="card-header">
+                        <h2>Notifications</h2>
+                        <button class="mark-read">Mark all as read</button>
+                    </div>
+                    <div class="notification-list">
+                        <div class="notification-item unread">
+                            <div class="notification-icon order">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <div class="notification-content">
+                                <p>You have a new order <strong>#34587</strong> to process</p>
+                                <span class="notification-time">2 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="notification-item unread">
+                            <div class="notification-icon review">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="notification-content">
+                                <p>New 5-star review received on <strong>Handwoven Basket</strong></p>
+                                <span class="notification-time">5 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-icon alert">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="notification-content">
+                                <p><strong>3 products</strong> are running low on stock</p>
+                                <span class="notification-time">Yesterday</span>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-icon payment">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div class="notification-content">
+                                <p>Payment of <strong>₱3,750.00</strong> has been received</p>
+                                <span class="notification-time">Yesterday</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="dashboard-card actions-card">
+                    <div class="card-header">
+                        <h2>Quick Actions</h2>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn">
+                            <i class="fas fa-plus"></i>
+                            Add Product
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-tag"></i>
+                            Create Promo
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-truck"></i>
+                            Fulfill Orders
+                        </button>
+                        <a href="reports.html" class="action-btn">
+                            <i class="fas fa-chart-bar"></i>
+                            View Reports
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="seller.js"></script>
+    <script>
+        // Script for the demo order generation
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateOrderBtn = document.getElementById('generateOrderBtn');
+            const generationResult = document.getElementById('generationResult');
+            
+            // Replace with your actual Google Script Web App URL after deployment
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwDPVfkYfdTT03w9w6TW0u15OtDoqz-Gle5LcXce8v8SN3MU6F-v3nzyncYsKZF8ism/exec';
+            
+            // Function to fetch products from your website
+            async function fetchWebsiteProducts() {
+                try {
+                    // Try to load products from localStorage first (if they were saved from shop.js)
+                    const cachedProducts = localStorage.getItem('dangalProducts');
+                    if (cachedProducts) {
+                        return JSON.parse(cachedProducts);
+                    }
+                    
+                    // If no cached products, fetch products.json
+                    const response = await fetch('../Main Shop/products.json');
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch products');
+                    }
+                    
+                    const products = await response.json();
+                    
+                    // Format products for our needs
+                    return products.map(product => ({
+                        id: product.id || `P${Math.floor(Math.random() * 10000)}`,
+                        name: product.name,
+                        price: parseFloat(product.price.replace(/[₱,]/g, '')) || product.price,
+                        image: product.image
+                    }));
+                } catch (error) {
+                    console.error('Error fetching products:', error);
+                    
+                    // Return some default products if fetch fails
+                    return [
+                        {id: "P001", name: "Handwoven Bag", price: 450, image: "../images/longban1.png"},
+                        {id: "P002", name: "T'nalak Bag", price: 550, image: "../images/longban2.png"},
+                        {id: "P003", name: "Floral Handkerchief", price: 180, image: "../images/longban4.png"},
+                        {id: "P004", name: "Coffee Beans", price: 250, image: "../images/product1.jpg"},
+                        {id: "P005", name: "Handcrafted Basket", price: 350, image: "../images/product2.jpg"},
+                        {id: "P006", name: "Alamang Bagoong", price: 100, image: "../mainimages/21.png"},
+                        {id: "P007", name: "Balikutsa", price: 80, image: "../mainimages/22.png"},
+                        {id: "P008", name: "Skinless Longganisa", price: 250, image: "../mainimages/24.png"},
+                        {id: "P009", name: "Special Chicharon", price: 300, image: "../mainimages/25.png"},
+                        {id: "P010", name: "Abaca Carpet Rugs", price: 1200, image: "../mainimages/26.png"},
+                        {id: "P011", name: "Abaca Bags", price: 800, image: "../mainimages/27.png"},
+                        {id: "P012", name: "Capiz Chandelier", price: 3500, image: "../mainimages/28.png"},
+                        {id: "P013", name: "Lucban Longganisa", price: 250, image: "../mainimages/29.png"},
+                        {id: "P014", name: "Snack Bites", price: 150, image: "../mainimages/30.png"},
+                        {id: "P015", name: "Abaca Mat", price: 1000, image: "../mainimages/31.png"},
+                        {id: "P016", name: "Pearl Jewels", price: 1500, image: "../mainimages/32.png"},
+                        {id: "P017", name: "Clay Vase", price: 400, image: "../mainimages/33.png"},
+                        {id: "P018", name: "Buri Palm Fan", price: 150, image: "../mainimages/34.png"},
+                        {id: "P019", name: "Fried Dilis", price: 180, image: "../mainimages/35.png"},
+                        {id: "P020", name: "Pili Nuts with Onions", price: 250, image: "../mainimages/36.png"},
+                        {id: "P021", name: "T'nalak Robes", price: 2000, image: "../mainimages/37.png"},
+                        {id: "P022", name: "Cacao Beans", price: 300, image: "../mainimages/38.png"},
+                        {id: "P023", name: "Long Dress with Tribal Patterns", price: 1200, image: "../mainimages/39.png"},
+                        {id: "P024", name: "Capiz Shell Lamps", price: 2500, image: "../mainimages/40.png"},
+                        {id: "P025", name: "Dream Catcher", price: 300, image: "../mainimages/41.png"}
+                        
+                    ];
+                }
+            }
+            
+            generateOrderBtn.addEventListener('click', async function() {
+                // Show loading state
+                generationResult.innerHTML = 'Fetching products and generating order...';
+                generationResult.className = 'loading';
+                generationResult.style.display = 'block';
+                
+                try {
+                    // Fetch products from website
+                    const products = await fetchWebsiteProducts();
+                    
+                    const formData = new FormData();
+                    formData.append('action', 'generateRandomOrder');
+                    formData.append('products', JSON.stringify(products));
+                    
+                    const response = await fetch(scriptURL, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.result === 'success') {
+                        generationResult.innerHTML = `
+                            <i class="fas fa-check-circle"></i> Success! Generated order ID: ${data.orderId}
+                        `;
+                        generationResult.className = 'success';
+                    } else {
+                        throw new Error(data.message || 'Unknown error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    generationResult.innerHTML = `
+                        <i class="fas fa-exclamation-circle"></i> Error: ${error.message || 'Failed to generate order'}
+                    `;
+                    generationResult.className = 'error';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

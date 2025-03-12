@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Tracking | Dangal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lora:wght@400;700&family=Crimson+Text:wght@400;700&family=Prata&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lora', serif; 
+        }
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --main-color: #8a8f70;
+            --sub-color: #2f3a2a;
+            --input-bg: #f9f9f9;
+            --border-color: #dddddd;
+            --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.1);
+            --radius-sm: 5px;
+            --radius-md: 8px;
+            --radius-lg: 20px;
+            --big-font: 4.5rem;
+            --h2-font: 3.3rem;
+            --h3-font: 2rem;
+            --normal-font: 1rem;
+            --status-pending: #F59E0B;
+            --status-processing: #3B82F6;
+            --status-shipped: #8B5CF6;
+            --status-delivered: #10B981;
+            --status-low: #EF4444;
+            --status-out: #6B7280;
+            --status-ok: #10B981;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: var(--text-color);
+        }
+
+        /* Header Styles */
+        header {
+            width: 100%;
+            top: 0;
+            right: 0;
+            z-index: 1010;
+            position: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-color);
+            padding: 5px 14%;
+            transition: all .35s ease;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            display: block;
+        }
+
+        .navlist {
+            display: flex;
+            list-style: none;
+        }
+
+        .navlist a {
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 10px 25px;
+            font-size: var(--normal-font);
+            transition: all .36s ease;
+            text-decoration: none;
+        }
+
+        .navlist a:hover {
+           color: var(--main-color); 
+        }
+
+        .navlist a.active {
+            color: var(--main-color);
+            position: relative;
+        }
+
+        .navlist a.active::after {
+            content: "";
+            position: absolute;
+            bottom: 0; 
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background-color: var(--main-color);
+            transition: all 0.3s ease; 
+        }
+
+        .header-icons i {
+            font-size: 32px;
+            color: var(--text-color);
+            margin-right: 20px;
+            transition: all .36s ease;
+        }
+
+        .header-icons i:hover {
+            color: var(--main-color);
+        }
+
+        #menu-icon {
+            font-size: 34px;
+            color: var(--text-color);
+            z-index: 10001;
+            margin-right: 20px;
+            display: none;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            padding: 20px 14% 40px;
+        }
+
+        /* Tracking System Styles */
+        .tracking-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--bg-color);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            padding: 30px;
+            margin-bottom: 60px; /* Added margin to separate from footer */
+        }
+
+        .tracking-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .tracking-header h1 {
+            font-size: 28px;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .tracking-header p {
+            color: #6B7280;
+            font-size: 16px;
+        }
+
+        .tracking-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tracking-input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .tracking-input:focus {
+            outline: none;
+            border-color: var(--main-color);
+            box-shadow: 0 0 0 2px rgba(138, 143, 112, 0.2);
+        }
+
+        .tracking-btn {
+            padding: 14px 25px;
+            background-color: var(--main-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tracking-btn:hover {
+            background-color: var(--sub-color);
+        }
+
+        .tracking-result {
+            display: none;
+        }
+
+        .order-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: var(--radius-md);
+            margin-bottom: 30px;
+        }
+
+        .order-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .order-info p {
+            color: #6B7280;
+            margin-bottom: 3px;
+            font-size: 14px;
+        }
+
+        .order-status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .status-pending {
+            background-color: var(--status-pending);
+        }
+
+        .status-processing {
+            background-color: var(--status-processing);
+        }
+
+        .status-shipped {
+            background-color: var(--status-shipped);
+        }
+
+        .status-delivered {
+            background-color: var(--status-delivered);
+        }
+
+        .tracking-progress {
+            margin-bottom: 30px;
+        }
+
+        .progress-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .progress-steps::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #e5e7eb;
+            z-index: 1;
+        }
+
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 25%;
+        }
+
+        .step-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            color: #6B7280;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .step-label {
+            font-size: 14px;
+            color: #6B7280;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .progress-step.active .step-icon {
+            background-color: var(--main-color);
+            color: white;
+        }
+
+        .progress-step.active .step-label {
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .progress-step.completed .step-icon {
+            background-color: var(--status-delivered);
+            color: white;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            height: 2px;
+            background-color: var(--main-color);
+            z-index: 1;
+            transition: width 0.5s ease;
+        }
+
+        .tracking-details {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .tracking-details-header {
+            background-color: #f9f9f9;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .tracking-details-header h3 {
+            font-size: 16px;
+            color: var(--text-color);
+        }
+
+        .tracking-timeline {
+            padding: 20px;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            top: 30px;
+            left: 15px;
+            width: 2px;
+            height: calc(100% - 15px);
+            background-color: #e5e7eb;
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--main-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            color: white;
+            font-size: 12px;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-date {
+            font-size: 14px;
+            color: #6B7280;
+            margin-bottom: 5px;
+        }
+
+        .timeline-text {
+            font-size: 16px;
+            color: var(--text-color);
+        }
+
+        .timeline-location {
+            font-size: 14px;
+            color: #6B7280;
+            margin-top: 5px;
+        }
+
+        .order-items {
+            margin-top: 30px;
+        }
+
+        .order-items h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .item-list {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 16px;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .item-meta {
+            font-size: 14px;
+            color: #6B7280;
+        }
+
+        .item-price {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .order-totals {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: var(--radius-md);
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .total-row:last-child {
+            margin-bottom: 0;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-color);
+            font-weight: 600;
+        }
+
+        .tracking-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .primary-btn {
+            background-color: var(--main-color);
+            color: white;
+            border: none;
+        }
+
+        .primary-btn:hover {
+            background-color: var(--sub-color);
+        }
+
+        .secondary-btn {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .secondary-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+        .error-message {
+            display: none;
+            padding: 15px;
+            background-color: #fee2e2;
+            color: #b91c1c;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .tracking-placeholder {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .placeholder-icon {
+            font-size: 60px;
+            color: #d1d5db;
+            margin-bottom: 20px;
+        }
+
+        .placeholder-text {
+            font-size: 18px;
+            color: #6B7280;
+            margin-bottom: 10px;
+        }
+
+        .placeholder-subtext {
+            font-size: 14px;
+            color: #9ca3af;
+        }
+
+        /* Footer Styles */
+        .contact{
+            background: var(--main-color);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+            gap: 2rem;
+            padding: 100px 14%; /* Added padding for better spacing */
+        }
+
+        .main-contact h3{
+            font-size: 23px;
+            margin-bottom: 1.6rem;
+            color: var(--bg-color);
+        }
+
+        .main-contact h5{
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--bg-color);  
+        }
+
+        .icons{
+            display: flex;
+            margin-top: 2rem;
+        }
+
+        .icons i{
+            font-size: 25px;
+            margin-right: 1rem;
+            color: var(--bg-color);
+            transition: .35s ease;
+        }
+
+        .icons i:hover{
+            color: var(--sub-color);
+            transform: scale(1.1) translateY(-5px);
+        }
+
+        .main-contact li{
+            margin-bottom: 15px;
+            list-style: none;
+        }
+
+        .main-contact li a{
+            display: block;
+            color: var(--bg-color);
+            font-size: var(--normal-font);
+            font-weight: 600;
+            transition: all .35s ease;
+            text-decoration: none;
+        }
+
+        .main-contact li a:hover{
+            transform: translateX(8px);
+            color: var(--sub-color);
+        }
+
+        .last-text{
+            text-align: center;
+            padding: 20px;
+            background-color: var(--main-color);
+        }
+
+        .last-text p{
+            color: var(--bg-color);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1280px) {
+            header, .main-content, .contact {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .tracking-form {
+                flex-direction: column;
+            }
+            
+            .order-summary {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .tracking-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .contact {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .icons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 670px) {
+            #menu-icon {
+                display: block;
+            }
+            
+            .header-icons {
+                display: inline-flex;
+            }
+            
+            .navlist {
+                position: absolute;
+                top: 100%;
+                left: -100%;
+                width: 280px;
+                height: 120vh;
+                background: var(--bg-color);
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                padding: 150px 30px;
+                transition: all .35s;
+                box-shadow: var(--shadow-md);
+            }
+            
+            .navlist a {
+                display: block;
+                margin: 1.2rem 0;
+            }
+            
+            .navlist.open {
+                left: 0;
+            }
+            
+            .step-label {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo img {
+                height: 50px;
+            }
+            
+            .header-icons i {
+                font-size: 26px;
+                margin-right: 10px;
+            }
+            
+            #menu-icon {
+                font-size: 28px;
+            }
+            
+            .tracking-header h1 {
+                font-size: 24px;
+            }
+            
+            .tracking-container {
+                padding: 20px;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                padding-left: 15px;
+            }
+            
+            .timeline-icon {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            
+            .timeline-content {
+                padding-left: 15px;
+            }
+            
+            .main-contact h3 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Header -->
+    <header>
+        <a href="../HomePage/index.html" class="logo"><img src="../images/dangallogov1.png" alt="Dangal Logo"></a>
+        <ul class="navlist">
+            <li><a href="../HomePage/index.html">Home</a></li>
+            <li><a href="../Main Shop/shop.html">Shop</a></li>
+            <li><a href="../About Us/about.html">About</a></li>
+            <li><a href="../Contact Us/contact.html">Contact</a></li>
+        </ul>
+        <div class="header-icons">
+            <a href="../Cart/cart.html"><i class='bx bx-cart'></i></a>
+            <a href="../Login/login.html"><i class='bx bxs-user-circle'></i></a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="tracking-container">
+            <div class="tracking-header">
+                <h1>Track Your Order</h1>
+                <p>Enter your order number to check the current status and estimated delivery date</p>
+            </div>
+            
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i> We couldn't find an order with that tracking number. Please check and try again.
+            </div>
+            
+            <form class="tracking-form" id="trackingForm">
+                <input type="text" class="tracking-input" id="trackingNumber" placeholder="Enter your order/tracking number (e.g., ORD-12345)" required>
+                <button type="submit" class="tracking-btn">
+                    <i class="fas fa-search"></i> Track Order
+                </button>
+            </form>
+            
+            <div class="tracking-placeholder" id="trackingPlaceholder">
+                <div class="placeholder-icon">
+                    <i class="fas fa-box"></i>
+                </div>
+                <p class="placeholder-text">Enter your order number to track your package</p>
+                <p class="placeholder-subtext">You can find your order number in your order confirmation email</p>
+            </div>
+            
+            <div class="tracking-result" id="trackingResult">
+                <div class="order-summary">
+                    <div class="order-info">
+                        <h3>Order #<span id="orderNumber">ORD-12345</span></h3>
+                        <p>Placed on <span id="orderDate">March 5, 2025</span></p>
+                        <p>Customer: <span id="customerName">Juan Dela Cruz</span></p>
+                    </div>
+                    <div class="order-status">
+                        <div class="order-status-badge" id="statusBadge">Processing</div>
+                    </div>
+                </div>
+                
+                <div class="tracking-progress">
+                    <h3 class="progress-title">Delivery Progress</h3>
+                    <div class="progress-steps">
+                        <div class="progress-line" id="progressLine"></div>
+                        <div class="progress-step" data-step="1">
+                            <div class="step-icon"><i class="fas fa-check"></i></div>
+                            <div class="step-label">Order Confirmed</div>
+                        </div>
+                        <div class="progress-step" data-step="2">
+                            <div class="step-icon"><i class="fas fa-box"></i></div>
+                            <div class="step-label">Processing</div>
+                        </div>
+                        <div class="progress-step" data-step="3">
+                            <div class="step-icon"><i class="fas fa-shipping-fast"></i></div>
+                            <div class="step-label">Shipped</div>
+                        </div>
+                        <div class="progress-step" data-step="4">
+                            <div class="step-icon"><i class="fas fa-home"></i></div>
+                            <div class="step-label">Delivered</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tracking-details">
+                        <div class="tracking-details-header">
+                            <h3>Tracking Details</h3>
+                            <span id="deliveryDate">Estimated Delivery: March 9, 2025</span>
+                        </div>
+                        <div class="tracking-timeline" id="trackingTimeline">
+                            <!-- Timeline items will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-items">
+                    <h3>Order Items</h3>
+                    <div class="item-list" id="itemList">
+                        <!-- Order items will be populated by JavaScript -->
+                    </div>
+                    
+                    <div class="order-totals">
+                        <div class="total-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">₱1,250.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Shipping</span>
+                            <span id="shipping">₱120.00</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Total</span>
+                            <span id="total">₱1,370.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tracking-actions">
+                    <button class="action-btn secondary-btn" id="contactSupportBtn">
+                        <i class="fas fa-headset"></i> Contact Support
+                    </button>
+                    <button class="action-btn primary-btn" id="viewOrderDetailsBtn">
+                        <i class="fas fa-eye"></i> View Order Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <section class="contact" id="contact">
+        <div class="main-contact">
+            <h3>Dangal</h3>
+            <h5>Come Connect with us</h5>
+            <div class="icons">
+                <a href="#"><i class='bx bxl-facebook-square'></i></a>
+                <a href="#"><i class='bx bxl-instagram' ></i></a>
+                <a href="#"><i class='bx bxl-twitter' ></i></a>
+            </div>
+        </div>
+
+        <div class="main-contact">
+            <h3>Explore</h3>   
+                <li><a href="../HomePage/index.html">Home</a></li>
+                <li><a href="../Main Shop/shop.html">Shop</a></li>
+                <li><a href="../About Us/about.html">About</a></li>
+                <li><a href="../Contact Us/contact.html">Contact</a></li>
+        </div>
+
+        <div class="main-contact">
+            <h3>Our Services</h3>
+            <li><a href="../assistant/assistant.html">Chat With Us</a></li>
+            <li><a href="../order/order.html">Track Your Order</a></li>
+            <li><a href="../Seller/seller.html">Seller Dashboard</a></li>
+        </div>
+
+        <div class="main-contact">
+            <h3>Our Shopping</h3>
+            <li><a href="../clothing/clothing.html">Clothing Store</a></li>
+            <li><a href="../jewelry/jewelry.html">Trending Jewelry</a></li>
+            <li><a href="../accessories/accessories.html">Accessories</a></li>
+            <li><a href="../sales/sale.html">On-sale Items</a></li>
+        </div>
+    </section>
+
+    <div class="last-text">
+        <p>© 2025 Dangal. All Rights Reserved.</p>
+    </div>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuIcon = document.querySelector('#menu-icon');
+            const navlist = document.querySelector('.navlist');
+            
+            if (menuIcon) {
+                menuIcon.addEventListener('click', function() {
+                    navlist.classList.toggle('open');
+                });
+            }
+            
+            // Sample order data (in a real application, this would come from a database)
+            const orders = {
+                'ORD-12345': {
+                    orderNumber: 'ORD-12345',
+                    orderDate: 'March 5, 2025',
+                    customerName: 'Juan Dela Cruz',
+                    status: 'shipped',
+                    estimatedDelivery: 'March 8, 2025',
+                    progressStep: 3,
+                    timeline: [
+                        {
+                            date: 'March 6, 2025 - 10:30 AM',
+                            text: 'Package has been shipped',
+                            location: 'Dangal Logistics Center, Manila'
+                        },
+                        {
+                            date: 'March 6, 2025 - 2:45 PM',
+                            text: 'Order is being processed and packed',
+                            location: 'Dangal Warehouse, Quezon City'
+                        },
+                        {
+                            date: 'March 8, 2025 - 9:15 AM',
+                            text: 'Order confirmed and payment received',
+                            location: 'Dangal Online Store'
+                        }
+                    ],
+                    items: [
+                        {
+                            name: 'Handwoven Bag',
+                            image: '../images/longban1.png',
+                            price: '₱450.00',
+                            quantity: 1,
+                            variant: 'Natural Brown'
+                        },
+                        {
+                            name: 'Tnalak Bag',
+                            image: '../images/longban2.png',
+                            price: '₱500.00',
+                            quantity: 2,
+                            variant: 'Tnalak Pattern, Black'
+                        },
+                        {
+                            name: 'Abaca Carpet Rugs',
+                            image: '../mainimages/26.png',
+                            price: '₱1,200.00',
+                            quantity: 1,
+                            variant: 'Geometric Pattern'
+                        }
+                    ],
+                    subtotal: '₱2,150.00',
+                    shipping: '₱120.00',
+                    total: '₱2,270.00'
+                },
+                'ORD-12346': {
+                    orderNumber: 'ORD-12346',
+                    orderDate: 'Feb 28, 2025',
+                    customerName: 'Maria Santos',
+                    status: 'processing',
+                    estimatedDelivery: 'March 3, 2025',
+                    progressStep: 2,
+                    timeline: [
+                        {
+                            date: 'March 1, 2025 - 11:20 AM',
+                            text: 'Order is being processed and packed',
+                            location: 'Dangal Warehouse, Quezon City'
+                        },
+                        {
+                            date: 'March 2, 2025 - 3:30 PM',
+                            text: 'Order confirmed and payment received',
+                            location: 'Dangal Online Store'
+                        }
+                    ],
+                    items: [
+                        {
+                            name: 'T\'nalak Bag',
+                            image: '../images/longban2.png',
+                            price: '₱550.00',
+                            quantity: 1,
+                            variant: 'Traditional Pattern'
+                        },
+                        {
+                            name: 'Pili Nuts with Onions',
+                            image: '../mainimages/36.png',
+                            price: '₱250.00',
+                            quantity: 2,
+                            variant: '200g Pack'
+                        }
+                    ],
+                    subtotal: '₱1,050.00',
+                    shipping: '₱120.00',
+                    total: '₱1,170.00'
+                },
+                'ORD-12347': {
+                    orderNumber: 'ORD-12347',
+                    orderDate: 'March 6, 2025',
+                    customerName: 'Antonio Reyes',
+                    status: 'delivered',
+                    estimatedDelivery: 'March 10, 2025',
+                    progressStep: 4,
+                    timeline: [
+                        {
+                            date: 'March 7, 2025 - 2:10 PM',
+                            text: 'Package has been delivered',
+                            location: 'Customer Address, Makati City'
+                        },
+                        {
+                            date: 'March 8, 2025 - 9:45 AM',
+                            text: 'Out for delivery',
+                            location: 'Dangal Delivery Hub, Makati City'
+                        },
+                        {
+                            date: 'March 9, 2025 - 4:30 PM',
+                            text: 'Package has been shipped',
+                            location: 'Dangal Logistics Center, Manila'
+                        },
+                        {
+                            date: 'March 10, 2025 - 11:20 AM',
+                            text: 'Order is being processed and packed',
+                            location: 'Dangal Warehouse, Quezon City'
+                        },
+                        {
+                            date: 'March 10, 2025 - 5:15 PM',
+                            text: 'Order confirmed and payment received',
+                            location: 'Dangal Online Store'
+                        }
+                    ],
+                    items: [
+                        {
+                            name: 'Capiz Chandelier',
+                            image: '../mainimages/28.png',
+                            price: '₱3,500.00',
+                            quantity: 1,
+                            variant: 'Medium Size'
+                        },
+                        {
+                            name: 'Pearl Jewels',
+                            image: '../mainimages/32.png',
+                            price: '₱1,500.00',
+                            quantity: 1,
+                            variant: 'Necklace Set'
+                        }
+                    ],
+                    subtotal: '₱5,000.00',
+                    shipping: '₱150.00',
+                    total: '₱5,150.00'
+                },
+                'ORD-12348': {
+                    orderNumber: 'ORD-12348',
+                    orderDate: 'March 9, 2025',
+                    customerName: 'Elena Gomez',
+                    status: 'pending',
+                    estimatedDelivery: 'March 14, 2025',
+                    progressStep: 1,
+                    timeline: [
+                        {
+                            date: 'March 14, 2025 - 4:45 PM',
+                            text: 'Order confirmed and payment received',
+                            location: 'Dangal Online Store'
+                        }
+                    ],
+                    items: [
+                        {
+                            name: 'Floral Handkerchief',
+                            image: '../images/longban4.png',
+                            price: '₱180.00',
+                            quantity: 3,
+                            variant: 'Assorted Colors'
+                        },
+                        {
+                            name: 'Buri Palm Fan',
+                            image: '../mainimages/34.png',
+                            price: '₱150.00',
+                            quantity: 2,
+                            variant: 'Natural'
+                        }
+                    ],
+                    subtotal: '₱840.00',
+                    shipping: '₱120.00',
+                    total: '₱960.00'
+                }
+            };
+            
+            // Track order form submission
+            const trackingForm = document.getElementById('trackingForm');
+            const trackingNumber = document.getElementById('trackingNumber');
+            const trackingResult = document.getElementById('trackingResult');
+            const trackingPlaceholder = document.getElementById('trackingPlaceholder');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            trackingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const orderNumber = trackingNumber.value.trim();
+                
+                // Reset UI
+                errorMessage.style.display = 'none';
+                
+                // Check if order exists
+                if (orders[orderNumber]) {
+                    // Show order details
+                    displayOrderDetails(orders[orderNumber]);
+                    trackingResult.style.display = 'block';
+                    trackingPlaceholder.style.display = 'none';
+                } else {
+                    // Show error
+                    errorMessage.style.display = 'block';
+                    trackingResult.style.display = 'none';
+                    trackingPlaceholder.style.display = 'block';
+                }
+            });
+            
+            // Function to display order details
+            function displayOrderDetails(order) {
+                // Update order summary
+                document.getElementById('orderNumber').textContent = order.orderNumber;
+                document.getElementById('orderDate').textContent = order.orderDate;
+                document.getElementById('customerName').textContent = order.customerName;
+                
+                // Update status badge
+                const statusBadge = document.getElementById('statusBadge');
+                statusBadge.textContent = capitalizeFirstLetter(order.status);
+                statusBadge.className = 'order-status-badge status-' + order.status;
+                
+                // Update delivery date
+                document.getElementById('deliveryDate').textContent = 'Estimated Delivery: ' + order.estimatedDelivery;
+                
+                // Update progress steps
+                updateProgressSteps(order.progressStep);
+                
+                // Update timeline
+                updateTimeline(order.timeline);
+                
+                // Update order items
+                updateOrderItems(order.items);
+                
+                // Update totals
+                document.getElementById('subtotal').textContent = order.subtotal;
+                document.getElementById('shipping').textContent = order.shipping;
+                document.getElementById('total').textContent = order.total;
+            }
+            
+            // Function to update progress steps
+            function updateProgressSteps(currentStep) {
+                const progressSteps = document.querySelectorAll('.progress-step');
+                const progressLine = document.getElementById('progressLine');
+                
+                // Calculate progress line width
+                let progressWidth = 0;
+                if (currentStep === 1) progressWidth = 0;
+                else if (currentStep === 2) progressWidth = 33;
+                else if (currentStep === 3) progressWidth = 66;
+                else if (currentStep === 4) progressWidth = 100;
+                
+                progressLine.style.width = progressWidth + '%';
+                
+                // Update step classes
+                progressSteps.forEach((step, index) => {
+                    const stepNumber = index + 1;
+                    
+                    // Remove all classes first
+                    step.classList.remove('active', 'completed');
+                    
+                    if (stepNumber === currentStep) {
+                        step.classList.add('active');
+                    } else if (stepNumber < currentStep) {
+                        step.classList.add('completed');
+                    }
+                });
+            }
+            
+            // Function to update timeline
+            function updateTimeline(timeline) {
+                const timelineContainer = document.getElementById('trackingTimeline');
+                timelineContainer.innerHTML = '';
+                
+                timeline.forEach((item, index) => {
+                    const timelineItem = document.createElement('div');
+                    timelineItem.className = 'timeline-item';
+                    
+                    timelineItem.innerHTML = `
+                        <div class="timeline-icon">
+                            <i class="fas ${getTimelineIcon(item.text)}"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">${item.date}</div>
+                            <div class="timeline-text">${item.text}</div>
+                            <div class="timeline-location">${item.location}</div>
+                        </div>
+                    `;
+                    
+                    timelineContainer.appendChild(timelineItem);
+                });
+            }
+            
+            // Function to get timeline icon based on text
+            function getTimelineIcon(text) {
+                if (text.toLowerCase().includes('delivered')) return 'fa-check-circle';
+                if (text.toLowerCase().includes('out for delivery')) return 'fa-truck';
+                if (text.toLowerCase().includes('shipped')) return 'fa-shipping-fast';
+                if (text.toLowerCase().includes('processed')) return 'fa-box';
+                if (text.toLowerCase().includes('confirmed')) return 'fa-clipboard-check';
+                return 'fa-circle';
+            }
+            
+            // Function to update order items
+            function updateOrderItems(items) {
+                const itemListContainer = document.getElementById('itemList');
+                itemListContainer.innerHTML = '';
+                
+                items.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'item';
+                    
+                    itemElement.innerHTML = `
+                        <div class="item-image">
+                            <img src="${item.image}" alt="${item.name}">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-meta">Qty: ${item.quantity} • ${item.variant}</div>
+                        </div>
+                        <div class="item-price">${item.price}</div>
+                    `;
+                    
+                    itemListContainer.appendChild(itemElement);
+                });
+            }
+            
+            // Contact support button
+            document.getElementById('contactSupportBtn').addEventListener('click', function() {
+                window.location.href = '../Contact Us/contact.html';
+            });
+            
+            // View order details button
+            document.getElementById('viewOrderDetailsBtn').addEventListener('click', function() {
+                // In a real application, this would link to a detailed order page
+                alert('This would navigate to a detailed order page in a real application.');
+            });
+            
+            // Helper function to capitalize first letter
+            function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+            
+            // Demo functionality - pre-fill tracking number from URL parameter
+            function getParameterByName(name, url = window.location.href) {
+                name = name.replace(/[\[\]]/g, '\\$&');
+                const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            }
+            
+            const orderParam = getParameterByName('order');
+            if (orderParam) {
+                trackingNumber.value = orderParam;
+                trackingForm.dispatchEvent(new Event('submit'));
+            }
+            
+            // Scroll Reveal
+            if (typeof ScrollReveal !== "undefined") {
+                const sr = ScrollReveal({
+                    distance: "30px",
+                    duration: 2600,
+                    reset: true,
+                });
+                sr.reveal(".tracking-container", { delay: 200, origin: "bottom" });
+                sr.reveal(".contact", { delay: 300, origin: "bottom" });
+            }
+        });
+    </script>
+</body>
+</html>

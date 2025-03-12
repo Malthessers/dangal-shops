@@ -1,0 +1,42 @@
+[
+    {
+      "id": "P001",
+      "name": "Handwoven Bag",
+      "price": "₱450.00",
+      "image": "../images/longban1.png",
+      "category": "Bags",
+      "description": "Beautifully handwoven bag made by local artisans."
+    },
+    {
+      "id": "P002",
+      "name": "T'nalak Bag",
+      "price": "₱550.00",
+      "image": "../images/longban2.png",
+      "category": "Bags",
+      "description": "Traditional T'nalak fabric crafted into a stylish bag."
+    },
+    {
+      "id": "P003",
+      "name": "Floral Handkerchief",
+      "price": "₱180.00",
+      "image": "../images/longban4.png",
+      "category": "Accessories",
+      "description": "Delicate handkerchief with beautiful floral embroidery."
+    },
+    {
+      "id": "P004",
+      "name": "Organic Coffee Beans",
+      "price": "₱250.00",
+      "image": "../images/product1.jpg",
+      "category": "Food",
+      "description": "Premium organic coffee beans from local farmers."
+    },
+    {
+      "id": "P005",
+      "name": "Handcrafted Basket",
+      "price": "₱350.00",
+      "image": "../images/product2.jpg",
+      "category": "Home",
+      "description": "Intricately woven basket perfect for home decoration."
+    }
+  ]

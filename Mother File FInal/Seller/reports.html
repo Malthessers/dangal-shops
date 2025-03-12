@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Reports | Dangal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lora:wght@400;700&family=Crimson+Text:wght@400;700&family=Prata&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="seller.css">
+    <style>
+        .reports-container {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .reports-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .reports-title {
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .report-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .report-tab {
+            padding: 10px 20px;
+            background-color: #f5f5f5;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .report-tab.active {
+            background-color: #8a8f70;
+            color: white;
+        }
+        
+        .report-tab:hover:not(.active) {
+            background-color: #e9e9e9;
+        }
+        
+        .report-content {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: #8a8f70;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .loading-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #8a8f70;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        .export-btn {
+            padding: 10px 20px;
+            background-color: #8a8f70;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .export-btn:hover {
+            background-color: #767a5f;
+        }
+        
+        .reset-btn {
+            padding: 10px 20px;
+            background-color: #f5f5f5;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .back-btn {
+            padding: 10px 20px;
+            background-color: #f5f5f5;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            width: fit-content;
+            margin-bottom: 20px;
+        }
+        
+        .back-btn:hover {
+            background-color: #e9e9e9;
+        }
+        
+        .report-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .date-filter {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .date-filter input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .reports-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .report-tabs {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            
+            .report-tab {
+                white-space: nowrap;
+            }
+            
+            .date-filter {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Header -->
+    <header>
+        <a href="../HomePage/index.html" class="logo"><img src="../images/dangallogov1.png"></a>
+        <ul class="navlist">
+            <li><a href="../HomePage/index.html">Home</a></li>
+            <li><a href="../Main Shop/shop.html">Shop</a></li>
+            <li><a href="../About Us/about.html">About</a></li>
+            <li><a href="../Contact Us/contact.html">Contact</a></li>
+        </ul>
+        <div class="header-icons">
+            <a href="../Cart/cart.html"><i class='bx bx-cart'></i></a>
+            <a href="../Login/login.html" class="active"><i class='bx bxs-user-circle'></i></a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+
+    <!-- Seller Subheader -->
+    <div class="seller-subheader">
+        <div class="seller-info">
+            <div class="seller-avatar">
+                <img src="../HomePage/brand1.jpg" alt="Seller Profile">
+            </div>
+            <div class="seller-details">
+                <h3>Nueva Segovia Consortium of Cooperatives</h3>
+                <span class="seller-status online">Online</span>
+            </div>
+        </div>
+        <nav class="seller-nav">
+            <ul>
+                <li><a href="seller.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-box"></i> Products</a></li>
+                <li><a href="#"><i class="fas fa-shopping-bag"></i> Orders</a></li>
+                <li><a href="#"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="dashboard-content">
+        <a href="seller.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+        
+        <div class="reports-container">
+            <div class="reports-header">
+                <h1 class="reports-title">Sales Reports</h1>
+                
+                <div class="report-actions">
+                    <div class="date-filter">
+                        <label>Date Range:</label>
+                        <input type="date" id="startDate">
+                        <span>to</span>
+                        <input type="date" id="endDate">
+                        <button id="filterBtn" class="export-btn">
+                            <i class="fas fa-filter"></i> Filter
+                        </button>
+                        <button id="resetBtn" class="reset-btn">
+                            <i class="fas fa-undo"></i> Update
+                        </button>
+                    </div>
+                    
+                    <button id="exportBtn" class="export-btn">
+                        <i class="fas fa-file-excel"></i> Export to Excel
+                    </button>
+                </div>
+            </div>
+            
+            <div class="report-tabs">
+                <button class="report-tab active" data-tab="sales">Sales Summary</button>
+                <button class="report-tab" data-tab="orders">Order Details</button>
+                <button class="report-tab" data-tab="products">Product Performance</button>
+                <button class="report-tab" data-tab="customers">Customer Insights</button>
+            </div>
+            
+            <div class="report-content">
+                <div id="tableContainer" class="loading-indicator">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default dates (last 30 days)
+            const today = new Date();
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(today.getDate() - 30);
+            
+            document.getElementById('startDate').valueAsDate = thirtyDaysAgo;
+            document.getElementById('endDate').valueAsDate = today;
+            
+            // Direct CSV URLs for each sheet
+            const sheetUrls = {
+                'sales': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8wQwQolJeeOxmFK5UbQtPmiLJvRNTvKOJ6jhkU6R2T5IB5IzVQpm-1yShdaQ5-0FdcxMyztSs3RHG/pub?gid=0&single=true&output=csv',
+                'orders': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8wQwQolJeeOxmFK5UbQtPmiLJvRNTvKOJ6jhkU6R2T5IB5IzVQpm-1yShdaQ5-0FdcxMyztSs3RHG/pub?gid=79064096&single=true&output=csv',
+                'products': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8wQwQolJeeOxmFK5UbQtPmiLJvRNTvKOJ6jhkU6R2T5IB5IzVQpm-1yShdaQ5-0FdcxMyztSs3RHG/pub?gid=1369562115&single=true&output=csv',
+                'customers': 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8wQwQolJeeOxmFK5UbQtPmiLJvRNTvKOJ6jhkU6R2T5IB5IzVQpm-1yShdaQ5-0FdcxMyztSs3RHG/pub?gid=551817148&single=true&output=csv'
+            };
+            
+            // Track current active tab
+            let activeTab = 'sales';
+            
+            // Store original data for each tab
+            const originalData = {};
+            
+            // Load initial data
+            loadTabData(activeTab);
+            
+            // Tab switching
+            document.querySelectorAll('.report-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    document.querySelector('.report-tab.active').classList.remove('active');
+                    this.classList.add('active');
+                    
+                    // Load data for the selected tab
+                    activeTab = this.dataset.tab;
+                    loadTabData(activeTab);
+                });
+            });
+            
+            // Filter button
+            document.getElementById('filterBtn').addEventListener('click', function() {
+                loadTabData(activeTab);
+            });
+            
+            // Reset button
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                // Reset date inputs to default (last 30 days)
+                const today = new Date();
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(today.getDate() - 30);
+                
+                document.getElementById('startDate').valueAsDate = thirtyDaysAgo;
+                document.getElementById('endDate').valueAsDate = today;
+                
+                // Reload data with reset filters
+                loadTabData(activeTab);
+            });
+            
+            // Export button
+            document.getElementById('exportBtn').addEventListener('click', function() {
+                exportToExcel();
+            });
+            
+            // Function to load data for a specific tab
+            function loadTabData(tabName) {
+                const tableContainer = document.getElementById('tableContainer');
+                tableContainer.innerHTML = '<div class="spinner"></div>';
+                tableContainer.className = 'loading-indicator';
+                
+                // Get date filters
+                const startDate = document.getElementById('startDate').value;
+                const endDate = document.getElementById('endDate').value;
+                
+                // Get the URL for the selected tab
+                const url = sheetUrls[tabName];
+                
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(csvData => {
+                        // Parse CSV data
+                        const rows = parseCSV(csvData);
+                        
+                        // Store original data for reset functionality
+                        originalData[tabName] = [...rows];
+                        
+                        // Filter data by date if applicable
+                        const filteredRows = filterDataByDate(rows, startDate, endDate);
+                        
+                        // Render table
+                        renderTable(filteredRows, tableContainer);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                        tableContainer.innerHTML = `
+                            <div style="text-align: center; padding: 20px;">
+                                <p>Error loading data. Please try again later.</p>
+                                <p>Error details: ${error.message}</p>
+                            </div>
+                        `;
+                    });
+            }
+            
+            // Function to parse CSV data
+            function parseCSV(csvText) {
+                const lines = csvText.split('\n');
+                return lines.map(line => {
+                    // Handle quoted fields properly
+                    const row = [];
+                    let inQuotes = false;
+                    let currentField = '';
+                    
+                    for (let i = 0; i < line.length; i++) {
+                        const char = line[i];
+                        
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            row.push(currentField);
+                            currentField = '';
+                        } else {
+                            currentField += char;
+                        }
+                    }
+                    
+                    row.push(currentField); // Add the last field
+                    return row;
+                });
+            }
+            
+            // Function to filter data by date
+            function filterDataByDate(rows, startDate, endDate) {
+                if (!startDate || !endDate || rows.length < 2) {
+                    return rows;
+                }
+                
+                // Find the date column index (assuming it's labeled "Date" or contains "date")
+                const headers = rows[0];
+                let dateColumnIndex = headers.findIndex(header => 
+                    header.toLowerCase().includes('date'));
+                
+                if (dateColumnIndex === -1) {
+                    // If no date column found, return all data
+                    return rows;
+                }
+                
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                end.setHours(23, 59, 59); // Include the entire end day
+                
+                // Keep headers and filter data rows
+                return [
+                    headers,
+                    ...rows.slice(1).filter(row => {
+                        if (row.length <= dateColumnIndex) return false;
+                        
+                        const dateStr = row[dateColumnIndex];
+                        if (!dateStr) return false;
+                        
+                        const rowDate = new Date(dateStr);
+                        return rowDate >= start && rowDate <= end;
+                    })
+                ];
+            }
+            
+            // Function to render table
+            function renderTable(data, container) {
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<p>No data available</p>';
+                    container.className = '';
+                    return;
+                }
+                
+                let tableHTML = '<table>';
+                
+                // Add headers
+                tableHTML += '<tr>';
+                data[0].forEach(header => {
+                    tableHTML += `<th>${header}</th>`;
+                });
+                tableHTML += '</tr>';
+                
+                // Add data rows
+                for (let i = 1; i < data.length; i++) {
+                    tableHTML += '<tr>';
+                    data[i].forEach(cell => {
+                        tableHTML += `<td>${cell}</td>`;
+                    });
+                    tableHTML += '</tr>';
+                }
+                
+                tableHTML += '</table>';
+                container.innerHTML = tableHTML;
+                container.className = '';
+            }
+            
+            // Function to export data to Excel
+            function exportToExcel() {
+                const startDate = document.getElementById('startDate').value;
+                const endDate = document.getElementById('endDate').value;
+                const dateRange = startDate && endDate ? 
+                    `_${startDate}_to_${endDate}` : '';
+                
+                // Create workbook
+                const wb = XLSX.utils.book_new();
+                
+                // Function to fetch and add sheet
+                async function addSheetToWorkbook(sheetName, displayName) {
+                    try {
+                        const url = sheetUrls[sheetName];
+                        const response = await fetch(url);
+                        const csvData = await response.text();
+                        
+                        // Parse CSV
+                        const rows = parseCSV(csvData);
+                        
+                        // Filter by date if applicable
+                        const filteredRows = filterDataByDate(rows, startDate, endDate);
+                        
+                        // Convert to worksheet
+                        const ws = XLSX.utils.aoa_to_sheet(filteredRows);
+                        
+                        // Add to workbook
+                        XLSX.utils.book_append_sheet(wb, ws, displayName);
+                        
+                        return true;
+                    } catch (error) {
+                        console.error(`Error adding ${sheetName} sheet:`, error);
+                        return false;
+                    }
+                }
+                
+                // Add all sheets
+                Promise.all([
+                    addSheetToWorkbook('sales', 'Sales Summary'),
+                    addSheetToWorkbook('orders', 'Order Details'),
+                    addSheetToWorkbook('products', 'Product Performance'),
+                    addSheetToWorkbook('customers', 'Customer Insights')
+                ]).then(() => {
+                    // Write file
+                    XLSX.writeFile(wb, `Dangal_Sales_Report${dateRange}.xlsx`);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
