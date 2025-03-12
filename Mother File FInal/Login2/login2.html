@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Portal | Login & Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lora:wght@400;700&family=Crimson+Text:wght@400;700&family=Prata&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="login2.css">
+</head>
+<body>
+    
+        <!-- header -->
+    <header>
+        <a href="../HomePage/index.html" class="logo"><img src="../images/dangallogov1.png"></a>
+        <ul class="navlist">
+            <li><a href="../HomePage/index.html">Home</a></li>
+            <li><a href="../Main Shop/shop.html">Shop</a></li>
+            <li><a href="../About Us/about.html">About</a></li>
+            <li><a href="../Contact Us/contact.html">Contact</a></li>
+        </ul>
+        <div class="header-icons">
+            <a href="../Cart/cart.html"><i class='bx bx-cart'></i></a>
+            <a href="../Login/login.html" class="active"><i class='bx bxs-user-circle'></i></a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="seller-auth">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2>Seller Portal</h2>
+                <p>Manage your inventory and connect with customers</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <button class="tab-button active" data-tab="login">Login</button>
+                <button class="tab-button" data-tab="signup">Sign Up</button>
+            </div>
+            
+            <!-- Login Form -->
+            <div class="form-container active" id="login-form">
+                <form action="#" method="post">
+                    <div class="input-group">
+                        <label for="login-email">Email</label>
+                        <div class="input-field">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="login-email" name="email" required placeholder="your@email.com">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="login-password">Password</label>
+                        <div class="input-field">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="login-password" name="password" required placeholder="••••••••">
+                            <i class="fas fa-eye toggle-password"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="remember-forgot">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" class="auth-button">Login to Seller Account</button>
+                </form>
+                
+                <div class="auth-divider">
+                    <span>or continue with</span>
+                </div>
+                
+                <div class="social-login">
+                    <button class="social-button google">
+                        <i class="fab fa-google"></i>
+                        <span>Google</span>
+                    </button>
+                    <button class="social-button facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Facebook</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Sign Up Form -->
+            <div class="form-container" id="signup-form">
+                <form action="#" method="post">
+                    <div class="input-group">
+                        <label for="store-name">Store Name</label>
+                        <div class="input-field">
+                            <i class="fas fa-store"></i>
+                            <input type="text" id="store-name" name="store-name" required placeholder="Your Store Name">
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="first-name">First Name</label>
+                            <div class="input-field">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="first-name" name="first-name" required placeholder="First Name">
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="last-name">Last Name</label>
+                            <div class="input-field">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="last-name" name="last-name" required placeholder="Last Name">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="signup-email">Email</label>
+                        <div class="input-field">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="signup-email" name="email" required placeholder="your@email.com">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="input-field">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="phone" name="phone" required placeholder="e.g., +63 912 345 6789">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="location">Store Location</label>
+                        <div class="input-field">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <select id="location" name="location" required>
+                                <option value="" disabled selected>Select your location</option>
+                                <option value="luzon">Luzon</option>
+                                <option value="visayas">Visayas</option>
+                                <option value="mindanao">Mindanao</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="signup-password">Password</label>
+                        <div class="input-field">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="signup-password" name="password" required placeholder="Create a password" minlength="8">
+                            <i class="fas fa-eye toggle-password"></i>
+                        </div>
+                        <div class="password-strength">
+                            <span class="weak"></span>
+                            <span class="medium"></span>
+                            <span class="strong"></span>
+                        </div>
+                        <small>Password must be at least 8 characters with letters, numbers and special characters</small>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <div class="input-field">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirm your password">
+                        </div>
+                    </div>
+                    
+                    <div class="terms-agreement">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                    </div>
+                    
+                    <button type="submit" class="auth-button">Create Seller Account</button>
+                </form>
+                
+                <div class="auth-info">
+                    <p>By signing up, you'll have access to:</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Product listing management</li>
+                        <li><i class="fas fa-check"></i> Order tracking and fulfillment</li>
+                        <li><i class="fas fa-check"></i> Customer insights and analytics</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Decorative Elements -->
+        <div class="auth-decoration">
+            <div class="decoration-image">
+                <img src="seller-illustration.png" alt="Seller Platform Illustration">
+            </div>
+            <div class="decoration-text">
+                <h3>Join our Seller Community</h3>
+                <p>Connect with customers looking for authentic local products and grow your business with our platform.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (reuse your existing footer) -->
+    <footer class="contact">
+        <!-- Footer content -->
+    </footer>
+    
+    <script src="login2.js"></script>
+</body>
+</html>

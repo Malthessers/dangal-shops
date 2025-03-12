@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shopping Cart - Dangal Shop</title>
+    <link rel="stylesheet" type="text/css" href="cart.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lora:wght@400;700&family=Crimson+Text:wght@400;700&family=Prata&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Thank You Popup (initially hidden) -->
+<div class="thank-you-popup hidden">
+    <div class="popup-content">
+        <h2>Thank You for Your Purchase!</h2>
+        <p>Your order has been successfully placed.</p>
+        <button class="close-popup">Close</button>
+    </div>
+</div>
+
+    <!-- header -->
+    <header>
+        <a href="../HomePage/index.html" class="logo"><img src="../images/dangallogov1.png"></a>
+        <ul class = "navlist">
+            <li><a href="../HomePage/index.html">Home</a></li>
+            <li><a href="../Main Shop/shop.html">Shop</a></li>
+            <li><a href="../About Us/about.html" class="active">About</a></li>
+            <li><a href="../Contact Us/contact.html">Contact</a></li>
+        </ul>
+        <div class="header-icons">
+            <a href="../Cart/cart.html"><i class='bx bx-cart'></i></a>
+            <a href="../Login/login.html"><i class='bx bxs-user-circle'></i></a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+    
+<!-- subheader -->
+<div class="subheader">
+    <ul>
+        <li><a href="#">New Arrivals</a></li>
+
+        <!-- Luzon Dropdown -->
+        <li class="dropdown">
+            <a href="#">Luzon</a>
+            <div class="megamenu">
+                <ul class="content">
+                    <li class="megamenu-item subheader-megamenu"></li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../ilocos/ilocos.html">ILOCOS</a></div>
+                    </li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../cagayan/cagayan.html">CAGAYAN VALLEY</a></div>
+                    </li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../calabarzon/calabarzon.html">CALABARZON</a></div>
+                    </li>
+
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../mimaropa/mimaropa.html">MIMAROPA</a></div>
+                        </li>
+
+                        <li class="megamenu-item">
+                            <div class="menu-icon"></div>
+                            <div class="megamenu-link"><a href="../bicol/bicol.html">BICOL REGION</a></div>
+                        </li>
+
+                        <li class="megamenu-item">
+                            <div class="menu-icon"></div>
+                            <div class="megamenu-link"><a href="../ncr/ncr.html">NCR</a></div>
+                        </li>
+
+                        <li class="megamenu-item">
+                            <div class="menu-icon"></div>
+                            <div class="megamenu-link"><a href="../car/car.html">CAR</a></div>
+                        </li>
+                    
+                </ul>
+            </div>
+        </li>
+
+        <!-- Visayas Dropdown -->
+        <li class="dropdown">
+            <a href="#">Visayas</a>
+            <div class="megamenu">
+                <ul class="content">
+                    <li class="megamenu-item subheader-megamenu"></li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../wvisayas/wvisayas.html">WESTERN VISAYAS</a></div>
+                    </li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../cvisayas/cvisayas.html">CENTRAL VISAYAS</a></div>
+                    </li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../evisayas/evisayas.html">EASTERN VISAYAS</a></div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <!-- Mindanao Dropdown -->
+        <li class="dropdown">
+            <a href="#">Mindanao</a>
+            <div class="megamenu">
+                <ul class="content">
+                    <li class="megamenu-item subheader-megamenu"></li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../zamboanga/zamboanga.html">ZAMBOANGA</a></div>
+                    </li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../nmindanao/nmindanao.html">NORTHERN MINDANAO</a></div>
+                    </li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../davao/davao.html">DAVAO</a></div>
+                    </li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../davao/davao.html">DAVAO</a></div>
+                    </li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../soccsks/soccsks.html">SOCCSKSARGEN</a></div>
+                    </li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../caraga/caraga.html">CARAGA</a></div>
+                    </li>
+                    <li class="megamenu-item">
+                        <div class="menu-icon"></div>
+                        <div class="megamenu-link"><a href="../barmm/barmm.html">BARMM</a></div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li><a href="../sales/sale.html">Sale</a></li>
+    </ul>
+</div>
+    
+    <!-- Cart Page Content -->
+    <section class="cart-section">
+        <div class="page-title">
+            <h1>Your Shopping Cart</h1>
+        </div>
+        
+        <div class="cart-container">
+            <!-- Cart Items -->
+            <div class="cart-items">
+                <div class="cart-header">
+                    <div class="header-product">Product</div>
+                    <div class="header-price">Price</div>
+                    <div class="header-quantity">Quantity</div>
+                    <div class="header-subtotal">Subtotal</div>
+                </div>
+                
+                <div id="cart-items-container">
+                    <!-- Cart Item 1 -->
+                    <div class="cart-item" data-id="1">
+                        <div class="item-product">
+                            <div class="item-image">
+                                <img src="imageS1.jpg" alt="Product 1">
+                            </div>
+                            <div class="item-details">
+                                <h3>Handcrafted Bamboo Necklace</h3>
+                                <p class="item-variant">Variant: Natural</p>
+                                <button class="remove-item" data-id="1">
+                                    <i class='bx bx-trash'></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                        <div class="item-price">₱450.00</div>
+                        <div class="item-quantity">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn decrease" data-id="1">-</button>
+                                <input type="number" value="1" min="1" max="10" class="quantity-input" data-id="1">
+                                <button class="quantity-btn increase" data-id="1">+</button>
+                            </div>
+                        </div>
+                        <div class="item-subtotal">₱450.00</div>
+                    </div>
+                    
+                    <!-- Cart Item 2 -->
+                    <div class="cart-item" data-id="2">
+                        <div class="item-product">
+                            <div class="item-image">
+                                <img src="imageS1.jpg" alt="Product 2">
+                            </div>
+                            <div class="item-details">
+                                <h3>Handwoven Abaca Bag</h3>
+                                <p class="item-variant">Variant: Earth Tones</p>
+                                <button class="remove-item" data-id="2">
+                                    <i class='bx bx-trash'></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                        <div class="item-price">₱950.00</div>
+                        <div class="item-quantity">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn decrease" data-id="2">-</button>
+                                <input type="number" value="2" min="1" max="10" class="quantity-input" data-id="2">
+                                <button class="quantity-btn increase" data-id="2">+</button>
+                            </div>
+                        </div>
+                        <div class="item-subtotal">₱1,900.00</div>
+                    </div>
+                    
+                    <!-- Cart Item 3 -->
+                    <div class="cart-item" data-id="3">
+                        <div class="item-product">
+                            <div class="item-image">
+                                <img src="imageS1.jpg" alt="Product 3">
+                            </div>
+                            <div class="item-details">
+                                <h3>Tribal Pattern Wooden Earrings</h3>
+                                <p class="item-variant">Variant: Engraved</p>
+                                <button class="remove-item" data-id="3">
+                                    <i class='bx bx-trash'></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                        <div class="item-price">₱350.00</div>
+                        <div class="item-quantity">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn decrease" data-id="3">-</button>
+                                <input type="number" value="1" min="1" max="10" class="quantity-input" data-id="3">
+                                <button class="quantity-btn increase" data-id="3">+</button>
+                            </div>
+                        </div>
+                        <div class="item-subtotal">₱350.00</div>
+                    </div>
+                </div>
+                
+                <div class="cart-actions">
+                    <button id="clear-cart" class="secondary-btn">
+                        <i class='bx bx-x'></i> Clear Cart
+                    </button>
+                    <button id="update-cart" class="secondary-btn">
+                        <i class='bx bx-refresh'></i> Update Cart
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Cart Summary -->
+            <div class="cart-summary">
+                <h2>Order Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="cart-subtotal">₱2,700.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>Calculated at checkout</span>
+                </div>
+                <!-- Add this in your cart summary section -->
+                <div class="summary-row shipping">
+                    <span>Shipping</span>
+                    <span id="cart-shipping">₱120.00</span>
+                </div>
+                <div class="shipping-info">
+                    <!-- Estimated delivery date will be inserted here -->
+                </div>
+                <div class="summary-row discount hidden">
+                    <span>Discount</span>
+                    <span id="cart-discount">-₱0.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span id="cart-total">₱2,700.00</span>
+                </div>
+                
+                <!-- Apply Coupon -->
+                <div class="coupon-container">
+                    <div class="coupon-input">
+                        <input type="text" id="coupon-code" placeholder="Enter coupon code">
+                        <button id="apply-coupon" class="coupon-btn">Apply</button>
+                    </div>
+                    <p id="coupon-message" class="coupon-message"></p>
+                </div>
+                
+                <!-- Checkout Buttons -->
+                <div class="checkout-buttons">
+                    <button id="checkout-btn" class="primary-btn">
+                        Proceed to Checkout
+                    </button>
+                    <a href="../Main Shop/shop.html" class="continue-shopping">
+                        <i class='bx bx-arrow-back'></i> Continue Shopping
+                    </a>
+                </div>
+
+                                    <!-- Make sure your thank-you popup has this structure -->
+                    <div class="thank-you-popup hidden">
+                        <div class="popup-content">
+                            <button class="close-popup">&times;</button>
+                            <h2>Thank You for Your Order!</h2>
+                            <p>Your order has been placed successfully.</p>
+                            <!-- Order info will be inserted here -->
+                        </div>
+                    </div>
+                
+                <!-- Shipping Policy Notice -->
+                <div class="shipping-note">
+                    <i class='bx bx-info-circle'></i>
+                    <p>Free shipping on orders over ₱1,500 to Metro Manila. Additional fees may apply for provincial areas.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Empty Cart State (hidden by default) -->
+        <div id="empty-cart" class="empty-cart hidden">
+            <div class="empty-cart-content">
+                <i class='bx bx-cart bx-lg'></i>
+                <h2>Your cart is empty</h2>
+                <p>Looks like you haven't added any items to your cart yet.</p>
+                <a href="../Main Shop/shop.html" class="primary-btn">Start Shopping</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recently Viewed Products -->
+<section class="recently-viewed">
+    <div class="section-title">
+        <h2>Recently Viewed</h2>
+    </div>
+    
+    <div class="product-slider">
+        <div class="product-card">
+            <img src="../luzonimages/ilocos12.png" alt="Evolutionary Chicharon">
+            <h3>Evolutionary Chicharon</h3>
+            <p class="product-price">₱200.00</p>
+            <button class="add-to-cart-btn" 
+                data-id="ilocos12" 
+                data-name="Evolutionary Chicharon" 
+                data-price="200.00" 
+                data-image="../luzonimages/ilocos12.png">
+                <i class='bx bx-cart-add'></i> Add to Cart
+            </button>
+        </div>
+        
+        <div class="product-card">
+            <img src="../luzonimages/ilocos7.png" alt="Woven Rattan Coaster Set">
+            <h3>Woven Rattan Coaster Set</h3>
+            <p class="product-price">₱380.00</p>
+            <button class="add-to-cart-btn" 
+                data-id="ilocos7" 
+                data-name="Woven Rattan Coaster Set" 
+                data-price="380.00" 
+                data-image="../luzonimages/ilocos7.png">
+                <i class='bx bx-cart-add'></i> Add to Cart
+            </button>
+        </div>
+        
+        <div class="product-card">
+            <img src="../luzonimages/ilocos25.png" alt="Capiz Shell Wind Chimes">
+            <h3>Capiz Shell Wind Chimes</h3>
+            <p class="product-price">₱420.00</p>
+            <button class="add-to-cart-btn" 
+                data-id="ilocos25" 
+                data-name="Capiz Shell Wind Chimes" 
+                data-price="420.00" 
+                data-image="../luzonimages/ilocos25.png">
+                <i class='bx bx-cart-add'></i> Add to Cart
+            </button>
+        </div>
+        
+        <div class="product-card">
+            <img src="../luzonimages/ilocos6.png" alt="T'nalak Table Runner">
+            <h3>T'nalak Table Runner</h3>
+            <p class="product-price">₱850.00</p>
+            <button class="add-to-cart-btn" 
+                data-id="ilocos6" 
+                data-name="T'nalak Table Runner" 
+                data-price="850.00" 
+                data-image="../luzonimages/ilocos6.png">
+                <i class='bx bx-cart-add'></i> Add to Cart
+            </button>
+        </div>
+    </div>
+</section>
+
+    <!--Contact-->
+    <section class="contact" id="contact">
+        <div class="main-contact">
+            <h3>Dangal</h3>
+            <h5>Come Connect with us</h5>
+            <div class="icons">
+                <a href="#"><i class='bx bxl-facebook-square'></i></a>
+                <a href="#"><i class='bx bxl-instagram' ></i></a>
+                <a href="#"><i class='bx bxl-twitter' ></i></a>
+            </div>
+        </div>
+
+        <div class="main-contact">
+            <h3>Explore</h3>   
+            <li><a href="../HomePage/index.html">Home</a></li>
+            <li><a href="../Main Shop/shop.html">Shop</a></li>
+            <li><a href="../About Us/about.html">About</a></li>
+            <li><a href="../Contact Us/contact.html">Contact</a></li>
+        </div>
+
+        <div class="main-contact">
+            <h3>Our Services</h3>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Gift Cards</a></li>
+        </div>
+
+        <div class="main-contact">
+            <h3>Our Shopping</h3>
+            <li><a href="#">Clothing Store</a></li>
+            <li><a href="#">Trending Jewelry</a></li>
+            <li><a href="#">Accessories</a></li>
+            <li><a href="#">On-sale Items</a></li>
+        </div>
+    </section>
+
+    <div class="last-text">
+        <p>© 2025 Dangal. All Rights Reserved.</p>
+    </div>
+
+    <!-- JS link -->
+    <script src="cart.js"></script>
+</body>
+</html>

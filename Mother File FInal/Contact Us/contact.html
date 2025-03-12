@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Dangal Shop</title>
+    <link rel="stylesheet" type="text/css" href="contact.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <a href="../HomePage/index.html" class="logo"><img src="../images/dangallogov1.png"></a>
+        <ul class = "navlist">
+            <li><a href="../HomePage/index.html">Home</a></li>
+            <li><a href="../Main Shop/shop.html">Shop</a></li>
+            <li><a href="../About Us/about.html">About</a></li>
+            <li><a href="../Contact Us/contact.html" class="active">Contact</a></li>
+        </ul>
+        <div class="header-icons">
+            <a href="../Cart/cart.html"><i class='bx bx-cart'></i></a>
+            <a href="../Login/login.html"><i class='bx bxs-user-circle'></i></a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="contacts" id="contacts">
+        <div class="contact-page">
+            <h1>Contact Us</h1>
+            <p>We're here to help with any questions you may have about our products or services</p> 
+        </div>
+    </section>
+
+    <!-- Contact Card Section -->
+    <section class="contact-options">
+        <div class="contact-card">
+            <div class="icon">
+                <i class='bx bxs-phone'></i>
+            </div>
+            <h2>Call Us</h2>
+            <a href="tel:(63)0945-975-5378" class="contact-info">+63 945-975-5278</a>
+            <p class="card-note">Available Mon-Fri, 9am-5pm</p>
+        </div>
+
+        <div class="contact-card">
+            <div class="icon">
+                <i class='bx bxs-conversation'></i>
+            </div>
+            <h2>Chat with Us</h2>
+            <p>We're available on weekdays<br>10:00am - 7:00pm EST</p>
+            <a href="../assistant/assistant.html" class="btn">Chat Now</a>
+        </div>
+
+        <div class="contact-card">
+            <div class="icon">
+                <i class='bx bxs-envelope'></i>
+            </div>
+            <h2>Ask a Question</h2>
+            <p>Fill out our form for inquiries<br>We'll respond within 24 hours</p>
+            <a href="#" class="btn">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Additional Information -->
+    <section class="under" id="under">
+        <div class="text-under">
+            <p>Looking for more information? Visit us at <a href="#">123, Elmo Street, BGC</a></p> 
+            <p>For media inquiries, contact <a href="mailto:matthew.dumaguits@gmail.com">matthew.dumaguits@gmail.com</a> or find your regional media contact <a href="mailto:LoremIpsumDelgi@gmail.com">LoremIpsumDelgi@gmail.com</a></p>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+       
+    <!--Contact-->
+<section class="contact" id="contact">
+    <div class="main-contact">
+        <h3>Dangal</h3>
+        <h5>Come Connect with us</h5>
+        <div class="icons">
+            <a href="https://www.facebook.com/share/1KBQuQ5Re6/?mibextid=wwXIfr"><i class='bx bxl-facebook-square'></i></a>
+            <a href="https://www.instagram.com/dnglwb_?igsh=MWFuOWRpd3libXAyNA%3D%3D&utm_source=qr"><i class='bx bxl-instagram' ></i></a>
+                <a href="#"><i class='bx bxl-twitter' ></i></a>
+        </div>
+    </div>
+
+    <div class="main-contact">
+        <h3>Explore</h3>   
+            <li><a href="../HomePage/index.html">Home</a></li>
+            <li><a href="../Main Shop/shop.html">Shop</a></li>
+            <li><a href="../About Us/about.html">About</a></li>
+            <li><a href="../Contact Us/contact.html">Contact</a></li>
+    </div>
+
+    <div class="main-contact">
+        <h3>Our Services</h3>
+        <li><a href="../assistant/assistant.html">Chat With Us</a></li>
+            <li><a href="../track/track.html">Track Your Order</a></li>
+            <li><a href="../Seller/seller.html">Seller Dashboard</a></li>
+    </div>
+
+    <div class="main-contact">
+        <h3>Our Shopping</h3>
+        <li><a href="../clothing/clothing.html">Clothing Store</a></li>
+        <li><a href="../jewelry/jewelry.html">Trending Jewelry</a></li>
+        <li><a href="../accessories/accessories.html">Accessories</a></li>
+        <li><a href="../sales/sale.html">On-sale Items</a></li>
+    </div>
+
+</section>
+
+<div class="last-text">
+    <p>© 2025 Dangal. All Rights Reserved.</p>
+</div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script>
+        // Mobile menu toggle
+        const menuIcon = document.querySelector('#menu-icon');
+        const navlist = document.querySelector('.navlist');
+        
+        menuIcon.addEventListener('click', function() {
+            navlist.classList.toggle('active');
+            menuIcon.classList.toggle('bx-x');
+        });
+    </script>
+</body>
+</html>
